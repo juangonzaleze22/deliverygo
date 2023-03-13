@@ -1,0 +1,71 @@
+
+
+.fm-menu .list-group a {
+
+	font-size: 16px;
+
+	color: #fff;
+
+	display: flex;
+
+	align-items: center
+
+}
+
+.fm-menu .list-group a i {
+
+	font-size: 23px
+
+}
+
+.fm-menu .list-group a:hover {
+
+	background: #0d6efd;
+
+	color: #fff;
+
+	transition: all .2s ease-out
+
+}
+
+.fm-file-box {
+
+	font-size: 25px;
+
+	background: #e9ecef;
+
+	width: 44px;
+
+	height: 44px;
+
+	display: flex;
+
+	align-items: center;
+
+	justify-content: center;
+
+	border-radius: .25rem
+
+}
+
+.fm-icon-box {
+
+	font-size: 32px;
+
+	background: rgb(255 255 255 / 15%);
+
+	color: #fff;
+
+	width: 52px;
+
+	height: 52px;
+
+	display: flex;
+
+	align-items: center;
+
+	justify-content: center;
+
+	border-radius: .25rem
+
+}

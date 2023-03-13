@@ -1,0 +1,369 @@
+/* swicther */
+
+.switcher-wrapper {
+
+	width: 280px;
+
+	height: 100%;
+
+	position: fixed;
+
+	right: -280px;
+
+	top: 0;
+
+	bottom: 0;
+
+	z-index: 1030;
+
+	background: #111314;
+
+	border-left: 0 solid #d2d2d2;
+
+	box-shadow: 0 .3rem .6rem rgba(0, 0, 0, .13);
+
+	transition: all .2s ease-out
+
+}
+
+.switcher-btn {
+
+	width: 40px;
+
+	height: 40px;
+
+	line-height: 40px;
+
+	font-size: 24px;
+
+	background: rgb(255 255 255 / 15%);
+
+	box-shadow: 0 .3rem .6rem rgba(0, 0, 0, .13);
+
+	color: #fff;
+
+	text-align: center;
+
+	border-top-left-radius: 10px;
+
+	border-bottom-left-radius: 10px;
+
+	position: absolute;
+
+	top: 40%;
+
+	right: 100%;
+
+	cursor: pointer
+
+}
+
+.switcher-wrapper.switcher-toggled {
+
+	right: 0
+
+}
+
+.switcher-body {
+
+	padding: 1.25rem
+
+}
+
+.switcher {
+
+	list-style: none;
+
+	margin: 0;
+
+	padding: 0;
+
+	overflow: hidden;
+
+	margin-left: 20px;
+
+}
+
+.switcher li {
+
+	float: left;
+
+	width: 55px;
+
+	height: 55px;
+
+	margin: 0 15px 15px 0px;
+
+	border-radius: 10px;
+
+	border: 0px solid black;
+
+}
+
+
+.bg-theme {
+
+	background-size: 100% 100%;
+
+	background-attachment: fixed;
+
+	background-position: center;
+
+	background-repeat: no-repeat;
+
+	transition: background .2s;
+
+}
+
+#theme1 {
+
+	background-image: url(../../../images/bg-themes/1.png);
+
+	background-size: 100% 100%;
+
+	background-position: center;
+
+	transition: background .3s;
+
+}
+
+#theme2 {
+
+	background-image: url(../../../images/bg-themes/2.png);
+
+	background-size: 100% 100%;
+
+	background-position: center;
+
+	transition: background .3s;
+
+}
+
+#theme3 {
+
+	background-image: url(../../../images/bg-themes/3.png);
+
+	background-size: 100% 100%;
+
+	background-position: center;
+
+	transition: background .3s;
+
+}
+
+#theme4 {
+
+	background-image: url(../../../images/bg-themes/4.png);
+
+	background-size: 100% 100%;
+
+	background-position: center;
+
+	transition: background .3s;
+
+}
+
+#theme5 {
+
+	background-image: url(../../../images/bg-themes/5.png);
+
+	background-size: 100% 100%;
+
+	background-position: center;
+
+	transition: background .3s;
+
+}
+
+#theme6 {
+
+	background-image: url(../../../images/bg-themes/6.png);
+
+	background-size: 100% 100%;
+
+	background-position: center;
+
+	transition: background .3s;
+
+}
+
+#theme7 {
+
+	background-image: linear-gradient(45deg, #0c675e, #069e90);
+
+	background-size: 100% 100%;
+
+	background-position: center;
+
+	transition: background .3s;
+
+}
+
+#theme8 {
+
+	background-image: linear-gradient(
+567deg
+, rgba(165, 42, 4, 0.89), rgba(113, 102, 8, 0.89), rgba(13, 95, 16, 0.93), rgba(4, 79, 88, 0.94), rgba(19, 56, 86, 0.9), rgba(24, 32, 78, 0.94), rgba(100, 8, 115, 0.95));
+
+	background-size: 100% 100%;
+
+	background-position: center;
+
+	transition: background .3s;
+
+}
+
+#theme9 {
+
+	background-image: linear-gradient(45deg, #29323c, #485563);
+
+	background-size: 100% 100%;
+
+	background-position: center;
+
+	transition: background .3s;
+
+}
+
+#theme10 {
+
+	background-image: linear-gradient(45deg, #795548, #945c48);
+
+	background-size: 100% 100%;
+
+	background-position: center;
+
+	transition: background .3s;
+
+}
+
+#theme11 {
+
+	background-image: linear-gradient(45deg, #1565C0, #1E88E5);
+
+	background-size: 100% 100%;
+
+	background-position: center;
+
+	transition: background .3s;
+
+}
+
+#theme12 {
+
+	background-image: linear-gradient(45deg, #65379b, #886aea);
+
+	background-size: 100% 100%;
+
+	background-position: center;
+
+	transition: background .3s;
+
+}
+
+#theme13 {
+	background-image: linear-gradient(180deg, #ff5447, #f1076f);
+	background-size: 100% 100%;
+	background-position: center;
+	transition: background .3s;
+  }
+  
+  #theme14 {
+	background-image: linear-gradient(180deg, #08a50e, #69bb03);
+	background-size: 100% 100%;
+	background-position: center;
+	transition: background .3s;
+  }
+  #theme15 {
+	background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+	background-size: 100% 100%;
+	background-position: center;
+	transition: background .3s;
+  }
+
+body.bg-theme1 {
+
+	background-image: url(../../../images/bg-themes/1.png);
+
+}
+
+body.bg-theme2 {
+
+	background-image: url(../../../images/bg-themes/2.png);
+
+}
+
+body.bg-theme3 {
+
+	background-image: url(../../../images/bg-themes/3.png);
+
+}
+
+body.bg-theme4 {
+
+	background-image: url(../../../images/bg-themes/4.png);
+
+}
+
+body.bg-theme5 {
+
+	background-image: url(../../../images/bg-themes/5.png);
+
+}
+
+body.bg-theme6 {
+
+	background-image: url(../../../images/bg-themes/6.png);
+
+}
+
+body.bg-theme7 {
+
+	background-image: linear-gradient(45deg, #0c675e, #069e90);
+
+}
+
+body.bg-theme8 {
+
+	background-image: linear-gradient(
+567deg
+, rgba(165, 42, 4, 0.89), rgba(113, 102, 8, 0.89), rgba(13, 95, 16, 0.93), rgba(4, 79, 88, 0.94), rgba(19, 56, 86, 0.9), rgba(24, 32, 78, 0.94), rgba(100, 8, 115, 0.95));
+
+}
+
+body.bg-theme9 {
+
+	background-image: linear-gradient(45deg, #29323c, #485563);
+
+}
+
+body.bg-theme10 {
+
+	background-image: linear-gradient(45deg, #795548, #945c48);
+
+}
+
+body.bg-theme11 {
+
+	background-image: linear-gradient(45deg, #1565C0, #1E88E5);
+
+}
+
+body.bg-theme12 {
+
+	background-image: linear-gradient(45deg, #65379b, #886aea);
+
+}
+
+body.bg-theme13 {
+	background-image: linear-gradient(180deg, #ff5447, #f1076f);
+  }
+
+body.bg-theme14 {
+	background-image: linear-gradient(180deg, #08a50e, #69bb03);
+}
+
+body.bg-theme15 {
+	background-image: linear-gradient(45deg, #6a11cb, #2575fc);
+  }
+

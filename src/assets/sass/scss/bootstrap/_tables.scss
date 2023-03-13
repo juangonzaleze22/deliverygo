@@ -1,0 +1,23 @@
+
+
+.table {
+	--bs-table-bg: transparent;
+	--bs-table-striped-color: rgb(255 255 255 / 85%);
+	--bs-table-striped-bg: rgb(255 255 255 / 12%);
+	--bs-table-active-color: rgb(255 255 255 / 27%);
+	--bs-table-active-bg: rgb(255 255 255 / 10%);
+	--bs-table-hover-color: rgb(255 255 255);
+	--bs-table-hover-bg: rgba(0, 0, 0, 0.075);
+	width: 100%;
+	margin-bottom: 1rem;
+	color: rgb(255 255 255 / 85%);
+	vertical-align: top;
+	border-color: rgb(255 255 255 / 15%);
+}
+
+
+.table-light {
+    --bs-table-bg: rgb(255 255 255 / 15%);
+    color: #fff;
+	border-color: rgb(255 255 255 / 15%)
+}
