@@ -2,6 +2,8 @@ import { Component , OnInit } from '@angular/core';
 import { SidebarService } from '../sidebar/sidebar.service';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -15,55 +17,16 @@ export class NavbarComponent implements OnInit{
 
     route: string;
     default : any;
+    userInfo: any;
+    imgProfile: string;
 
     constructor(
         public sidebarservice: SidebarService, 
         location: Location, 
-        router: Router,) {
+        router: Router,
+        private authService: AuthService,
 
-        router.events.subscribe((val) => {
-            if(location.path() == '/dashboard/default'){
-                $('body').removeAttr('class')
-                this.default =true; 
-                $('body').addClass('bg-theme bg-theme1')
-            } else {
-                this.default =false;
-                if(location.path() == '/dashboard/eCommerce'){
-                    $('body').removeAttr('class')
-                    $('body').addClass('bg-theme bg-theme2')
-                    } else {
-                        if(location.path() == '/dashboard/sales'){
-                            $('body').removeAttr('class')
-                            $('body').addClass('bg-theme bg-theme6')
-                        } else{
-                            if(location.path() == '/dashboard/analytics'){
-                                $('body').removeAttr('class')
-                                $('body').addClass('bg-theme bg-theme9')
-                            } else {
-                                if(location.path() == '/dashboard/alternate'){
-                                    $('body').removeAttr('class')
-                                    $('body').addClass('bg-theme bg-theme3')
-
-                                    }   else {
-                                        if(location.path() == '/dashboard/digital-marketing'){
-                                            $('body').removeAttr('class')
-                                            $('body').addClass('bg-theme bg-theme4')
-
-                                            } else {
-                                                    if(location.path() == '/dashboard/human-resources'){
-                                                        $('body').removeAttr('class')
-                                                        $('body').addClass('bg-theme bg-theme7')
-
-                                                    }
-
-                                                }
-
-                                    }
-                        }
-                    }
-                }
-            }
-          });
+        ) {
 
      }
         
@@ -80,7 +43,10 @@ export class NavbarComponent implements OnInit{
     }
 
     ngOnInit() {
+        this.userInfo = this.authService.getUser()
+        console.log(this.userInfo)
 
+        this.imgProfile = this.userInfo.photo ? environment.API_URL_IMAGE + this.userInfo.photo : 'https://placehold.it/100x100';
         /* Search Bar */
 
         $(".mobile-search-icon").on("click", function() {
@@ -105,6 +71,10 @@ export class NavbarComponent implements OnInit{
 			
 		});
 
+    }
+
+    logout(){ 
+        this.authService.logOut();
     }
     
 }

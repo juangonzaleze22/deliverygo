@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTES } from './sidebar-routes.config';
+import { ROUTES_CLIENT, ROUTES_DELIVERY, ROUTES_RESTAURANT } from './sidebar-routes.config';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { SidebarService } from "./sidebar.service";
 
 import * as $ from 'jquery';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -16,7 +17,11 @@ export class SidebarComponent implements OnInit {
     public menuItems: any[];
 
   
-    constructor( public sidebarservice: SidebarService,private router: Router) {
+    constructor( 
+        public sidebarservice: SidebarService,
+        private router: Router,
+        private authService: AuthService
+        ) {
 
         router.events.subscribe( (event: Event) => {
 
@@ -74,7 +79,30 @@ export class SidebarComponent implements OnInit {
     
 
     ngOnInit() {
-        this.menuItems = ROUTES.filter(menuItem => menuItem);
+
+        const {rol} = this.authService.getUser();
+
+
+        if ( rol == 'CLIENT') { 
+            this.menuItems = ROUTES_CLIENT.filter(menuItem => menuItem);
+        }
+
+        if ( rol == 'DELIVERY') { 
+            this.menuItems = ROUTES_DELIVERY.filter(menuItem => menuItem);
+        }
+
+        if ( rol == 'RESTAURANT') { 
+            this.menuItems = ROUTES_RESTAURANT.filter(menuItem => menuItem);
+        }
+
+
+        console.log( "asdasd", this.menuItems)
+
+
+        /* if ( rol == 'ADMIN') { 
+            this.menuItems = .filter(menuItem => menuItem);
+        } */
+
         $.getScript('./assets/js/app-sidebar.js');
 
     }

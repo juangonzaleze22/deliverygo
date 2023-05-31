@@ -1,71 +1,38 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AlternateComponent } from './alternate/alternate.component';
-import { AnalyticsComponent } from './analytics/analytics.component';
 
-import { DefaultComponent } from './default/default.component';
-import { DigitalMarketingComponent } from './digital-marketing/digital-marketing.component';
-import { ECommerceComponent } from './e-commerce/e-commerce.component';
-import { HumanResourcesComponent } from './human-resources/human-resources.component';
-import { SalesComponent } from './sales/sales.component';
+import { AuthGuard } from 'src/app/guards/auth.guard';
+
+import { PAGES_ADMIN, PAGES_CLIENT, PAGES_RESTAURANT, PAGES_PILOT } from './pages';
+import { DashboardComponent } from './dashboard.component';
+
+const ROL_USER = JSON.parse(localStorage.getItem('user'))!;
+
+let pages: any[] = [];
+
+if (ROL_USER?.rol == 'CLIENT') {
+  pages = PAGES_CLIENT
+}
+
+if (ROL_USER?.rol == 'DELIVERY') {
+  pages = PAGES_PILOT
+}
+
+if (ROL_USER?.rol == 'RESTAURANT') {
+  pages = PAGES_RESTAURANT
+}
+
+if (ROL_USER?.rol == 'ADMIN') {
+  pages = PAGES_ADMIN
+}
 
 const routes: Routes = [
   {
     path: '',
-    children: [
-      {
-        path: 'default',
-        component: DefaultComponent,
-        data: {
-          title: 'Default'
-        }
-      },
-      {
-        path: 'eCommerce',
-        component: ECommerceComponent,
-        data: {
-          title: 'eCommerce'
-        }
-      },
-      {
-        path: 'sales',
-        component: SalesComponent,
-        data: {
-          title: 'Sales'
-        }
-      },
-      {
-        path: 'analytics',
-        component: AnalyticsComponent,
-        data: {
-          title: 'Analytics'
-        }
-      },
-      {
-        path: 'alternate',
-        component: AlternateComponent,
-        data: {
-          title: 'Alternate'
-        }
-      },
-      {
-        path: 'digital-marketing',
-        component: DigitalMarketingComponent,
-        data: {
-          title: 'Digital Marketing'
-        }
-      },
-      {
-        path: 'human-resources',
-        component: HumanResourcesComponent,
-        data: {
-          title: 'Human Resources'
-        }
-      },
-     
-      
-    ]
-  }
+    canActivate: [AuthGuard],
+    component: DashboardComponent,
+    children: pages
+  },
 ];
 
 @NgModule({

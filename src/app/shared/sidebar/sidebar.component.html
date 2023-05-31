@@ -6,7 +6,7 @@
                 <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
             </div>
             <div>
-                <h4 class="logo-text">Dashtreme</h4>
+                <h4 class="logo-text">DELIVERYGO</h4>
             </div>
             <div class="toggle-icon ms-auto"><i  (click)="toggleSidebar()"  class='bx bx-arrow-to-left'></i>
             </div>
@@ -19,20 +19,25 @@
             <!-- First level menu -->
             <li *ngFor="let menuItem of menuItems" [ngClass]="[menuItem.class]" [routerLinkActive]="menuItem.submenu.length != 0 ? '' : 'active'"
                 [routerLinkActiveOptions]="{exact: true}">
-                <a [routerLink]="menuItem.class === '' ? [menuItem.path] : null " [ngClass]="menuItem.class === '' ? '' : 'cursor-pointer' " *ngIf="!menuItem.isExternalLink; else externalLinkBlock">
+                <a 
+                    [routerLink]="menuItem.class === '' ? [menuItem.path] : null " 
+                    [ngClass]="menuItem.class === '' ? '' : 'cursor-pointer' " 
+                    *ngIf="!menuItem.isExternalLink; else externalLinkBlock"
+                >
                     <i [ngClass]="[menuItem.icon]"></i>
                     <span class="menu-title">{{menuItem.title}}</span>
                     <span *ngIf="menuItem.badge != '' " [ngClass]="[menuItem.badgeClass]">{{menuItem.badge}}</span>
                 </a>
-                <ng-template #externalLinkBlock>
+                
+                <!-- <ng-template #externalLinkBlock>
                     <a [href]="[menuItem.path]" target="_blank">
                         <i [ngClass]="[menuItem.icon]"></i>
                         <span class="menu-title">{{menuItem.title}}</span>
                         <span *ngIf="menuItem.badge != '' " [ngClass]="[menuItem.badgeClass]">{{menuItem.badge}}</span>
                     </a>
-                </ng-template>
+                </ng-template> -->
                 <!-- Second level menu -->
-                <ul class="menu-content" *ngIf="menuItem.submenu.length > 0">
+               <!--  <ul class="menu-content" *ngIf="menuItem.submenu.length > 0">
                     <li *ngFor="let menuSubItem of menuItem.submenu" [routerLinkActive]="menuSubItem.submenu.length > 0 ? '' : 'active'" [ngClass]="[menuSubItem.class]">
                         <a [routerLink]="menuSubItem.submenu.length > 0 ? null : [menuSubItem.path]" [ngClass]="menuSubItem.submenu.length > 0 ? 'cursor-pointer' : '' " *ngIf="!menuSubItem.isExternalLink; else externalSubLinkBlock">
                             <i [ngClass]="[menuSubItem.icon]"></i>
@@ -45,9 +50,9 @@
                                 <span class="sub-menu-title">{{menuSubItem.title}}</span>
                                 <span *ngIf="menuSubItem.badge != '' " [ngClass]="[menuSubItem.badgeClass]">{{menuSubItem.badge}}</span>
                             </a>
-                        </ng-template>
+                        </ng-template> -->
                         <!-- Third level menu -->
-                        <ul class="menu-content" *ngIf="menuSubItem.submenu.length > 0">
+                        <!-- <ul class="menu-content" *ngIf="menuSubItem.submenu.length > 0">
                             <li *ngFor="let menuSubsubItem of menuSubItem.submenu" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
                                 [ngClass]="[menuSubsubItem.class]">
                                 <a [routerLink]="[menuSubsubItem.path]" *ngIf="!menuSubsubItem.isExternalLink; else externalSubSubLinkBlock">
@@ -65,7 +70,7 @@
                             </li>
                         </ul>
                     </li>
-                </ul>
+                </ul> -->
             </li>
         </ul>
          <!--navigation end here-->

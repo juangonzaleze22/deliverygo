@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+.error-text {
+    color: #aa0101;
+    font-weight: bold;
+    font-size: 13px;
+    text-shadow: none;
+    background: #feb9b9;
+    max-width: max-content;
+    padding: 3px 10px;
+    border-radius: 3.4px;
+    margin: 5px 0;
+    p{
+        margin: 0;
+        text-shadow: none;
+        font-weight: 500;
+    }
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@import 'themes/main.scss'

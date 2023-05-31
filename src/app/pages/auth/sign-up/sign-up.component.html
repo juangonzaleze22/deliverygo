@@ -6,64 +6,208 @@
 			<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-2">
 				<div class="col mx-auto">
 					<div class="my-4 text-center">
-						<img src="assets/images/logo-img.png" width="180" alt="" />
+						<img class="img-white" src="assets/images/logo-img.png" width="180" alt="" />
 					</div>
 					<div class="card">
 						<div class="card-body">
 							<div class="border p-4 rounded">
 								<div class="text-center">
-									<h3 class="">Sign Up</h3>
-									<p>Already have an account? <a href="JavaScript:;" (click)="onSignIn()">Sign in here</a>
+									<h3 class="">Regístrate</h3>
+									<p>Ya tienes cuenta? <a href="JavaScript:;" (click)="onSignIn()">Ingresa acá</a>
 									</p>
 								</div>
-								<div class="d-grid">
+								<!-- <div class="d-grid">
 									<a class="btn my-4 shadow-sm btn-light" href="javascript:;"> <span class="d-flex justify-content-center align-items-center">
-					  <img class="me-2" src="assets/images/icons/search.svg" width="16" alt="Image Description">
-					  <span>Sign Up with Google</span>
+										<img class="me-2" src="assets/images/icons/search.svg" width="16" alt="Image Description">
+										<span>Sign Up with Google</span>
 										</span>
 									</a> <a href="javascript:;" class="btn btn-light"><i class="bx bxl-facebook"></i>Sign Up with Facebook</a>
 								</div>
 								<div class="login-separater text-center mb-4"> <span>OR SIGN UP WITH EMAIL</span>
 									<hr/>
-								</div>
+								</div> -->
 								<div class="form-body">
-									<form class="row g-3">
+									<form class="row g-3" [formGroup]="formRegister" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
 										<div class="col-sm-6">
-											<label for="inputFirstName" class="form-label">First Name</label>
-											<input type="email" class="form-control" id="inputFirstName" placeholder="Jhon">
+											<label for="inputFirstName" class="form-label">Nombre*</label>
+											<input 
+												type="email" 
+												class="form-control"
+												formControlName="name" 
+											>
+											<ng-container *ngFor="let validation of loginValidationMessages.name">
+												<div
+													class="error-text"
+													*ngIf="
+														formRegister.get('name')?.hasError(validation.type) &&
+														(formRegister.get('name')?.dirty || formRegister.get('name')?.touched)
+													"
+												>
+													<p>{{ validation.message }}</p>
+												</div>
+											</ng-container>
 										</div>
 										<div class="col-sm-6">
-											<label for="inputLastName" class="form-label">Last Name</label>
-											<input type="email" class="form-control" id="inputLastName" placeholder="Deo">
+											<label for="inputFirstName" class="form-label">Apellido*</label>
+											<input 
+												type="email" 
+												class="form-control"
+												formControlName="lastname" 
+											>
+											<ng-container *ngFor="let validation of loginValidationMessages.lastname">
+												<div
+													class="error-text"
+													*ngIf="
+														formRegister.get('lastname')?.hasError(validation.type) &&
+														(formRegister.get('lastname')?.dirty || formRegister.get('lastname')?.touched)
+													"
+												>
+													<p>{{ validation.message }}</p>
+												</div>
+											</ng-container>
 										</div>
-										<div class="col-12">
-											<label for="inputEmailAddress" class="form-label">Email Address</label>
-											<input type="email" class="form-control" id="inputEmailAddress" placeholder="example@user.com">
+										<div class="col-sm-6">
+											<label for="inputFirstName" class="form-label">Teléfono*</label>
+											<input 
+												type="tel" 
+												class="form-control"
+												formControlName="phone" 
+											>
+											<ng-container *ngFor="let validation of loginValidationMessages.phone">
+												<div
+													class="error-text"
+													*ngIf="
+														formRegister.get('phone')?.hasError(validation.type) &&
+														(formRegister.get('phone')?.dirty || formRegister.get('phone')?.touched)
+													"
+												>
+													<p>{{ validation.message }}</p>
+												</div>
+											</ng-container>
 										</div>
-										<div class="col-12">
-											<label for="inputChoosePassword" class="form-label">Password</label>
-											<div class="input-group" id="show_hide_password">
-												<input type="password" class="form-control border-end-0" id="inputChoosePassword" value="12345678" placeholder="Enter Password"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
-											</div>
+									
+										<div class="col-sm-6">
+											<label for="inputFirstName" class="form-label">Dirección</label>
+											<input 
+												type="tel" 
+												class="form-control"
+												formControlName="addres" 
+											>
+											<ng-container *ngFor="let validation of loginValidationMessages.addres">
+												<div
+													class="error-text"
+													*ngIf="
+														formRegister.get('addres')?.hasError(validation.type) &&
+														(formRegister.get('addres')?.dirty || formRegister.get('addres')?.touched)
+													"
+												>
+													<p>{{ validation.message }}</p>
+												</div>
+											</ng-container>
 										</div>
-										<div class="col-12">
-											<label for="inputSelectCountry" class="form-label">Country</label>
-											<select class="form-select" id="inputSelectCountry" aria-label="Default select example">
-												<option selected>India</option>
-												<option value="1">United Kingdom</option>
-												<option value="2">America</option>
-												<option value="3">Dubai</option>
+										<div class="col-sm-12">
+											<label for="inputFirstName" class="form-label">Email*</label>
+											<input 
+												type="tel" 
+												class="form-control"
+												formControlName="email" 
+											>
+											<ng-container *ngFor="let validation of loginValidationMessages.email">
+												<div
+													class="error-text"
+													*ngIf="
+														formRegister.get('email')?.hasError(validation.type) &&
+														(formRegister.get('email')?.dirty || formRegister.get('email')?.touched)
+													"
+												>
+													<p>{{ validation.message }}</p>
+												</div>
+											</ng-container>
+										</div>
+										<div class="col-sm-12">
+											<label for="inputFirstName" class="form-label">Contraseña*</label>
+											<input 
+												type="tel" 
+												class="form-control"
+												formControlName="password" 
+											>
+											<ng-container *ngFor="let validation of loginValidationMessages.password">
+												<div
+													class="error-text"
+													*ngIf="
+														formRegister.get('password')?.hasError(validation.type) &&
+														(formRegister.get('password')?.dirty || formRegister.get('password')?.touched)
+													"
+												>
+													<p>{{ validation.message }}</p>
+												</div>
+											</ng-container>
+										</div>
+										<div class="col-sm-12">
+											<label for="inputFirstName" class="form-label">Confirmar contraseña*</label>
+											<input 
+												type="tel" 
+												class="form-control"
+												formControlName="cpassword" 
+											>
+											<ng-container *ngFor="let validation of loginValidationMessages.cpassword">
+												<div
+													class="error-text"
+													*ngIf="
+														formRegister.get('cpassword')?.hasError(validation.type) &&
+														(formRegister.get('cpassword')?.dirty || formRegister.get('cpassword')?.touched)
+													"
+												>
+													<p>{{ validation.message }}</p>
+												</div>
+											</ng-container>
+										</div>
+										<div class="col-6">
+											<label for="inputSelectCountry" class="form-label">Rol*</label>
+											<select class="form-select" id="inputSelectCountry" aria-label="Default select example" formControlName="rol">
+												<option [value]="item" *ngFor="let item of globalService.ROLES; let index = i">{{item}}</option>
 											</select>
 										</div>
-										<div class="col-12">
-											<div class="form-check form-switch">
-												<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-												<label class="form-check-label" for="flexSwitchCheckChecked">I read and agree to Terms & Conditions</label>
+										<div class="col-sm-6">
+											<label for="inputLastName" class="form-label">Foto</label>
+											<div class="boxImage">
+												<label class="imageUpload" for="photoFile">
+													<img [src]="imageUrl ? imageUrl : 'https://placehold.it/100x100'" alt="Preview Image" height="300" width="300">
+													<input 
+														id="photoFile"
+														type="file" 
+														accept="image/*"
+														(change)="onFileChange($event.target.files)" 
+													>
+													<button 
+														type="button"
+														class="btn" 
+														(click)="clearImage()" 
+														*ngIf="imageUrl"
+													>
+														<i class='bx bx-x'></i>
+													</button>
+												  </label>
 											</div>
+											  <ng-container *ngFor="let validation of loginValidationMessages.photo">
+												<div
+													class="error-text"
+													*ngIf="
+														formRegister.get('photo')?.hasError(validation.type) &&
+														(formRegister.get('photo')?.dirty || formRegister.get('photo')?.touched)
+													"
+												>
+													<p>{{ validation.message }}</p>
+												</div>
+											</ng-container>
 										</div>
-										<div class="col-12">
-											<div class="d-grid">
-												<button type="submit" class="btn btn-light"><i class='bx bx-user'></i>Sign up</button>
+									
+										<div class="col-12 ">
+											<div class="d-grid mt-4">
+												<button type="submit" class="btn btn-light" [disabled]="formRegister.invalid || loading">
+													<span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+													Crear usuario
+												</button>
 											</div>
 										</div>
 									</form>

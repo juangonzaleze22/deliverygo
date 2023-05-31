@@ -39,6 +39,7 @@
               "src/assets/css/icons.css",
               "node_modules/angular-calendar/css/angular-calendar.css",
               "src/assets/plugins/datatable/css/dataTables.bootstrap5.min.css",
+              "node_modules/ngx-toastr/toastr.css",
               "src/assets/sass/app.scss",
               "src/styles.scss"
             ],

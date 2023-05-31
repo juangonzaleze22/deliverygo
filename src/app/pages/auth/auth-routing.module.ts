@@ -13,7 +13,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'sign-in',
+        path: '',
         component: SignInComponent,
         data: {
           title: 'Sign In'

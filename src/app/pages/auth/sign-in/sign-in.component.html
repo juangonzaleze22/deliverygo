@@ -5,49 +5,97 @@
 			<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
 				<div class="col mx-auto">
 					<div class="mb-4 text-center">
-						<img src="assets/images/logo-img.png" width="180" alt="" />
+						<img src="assets/images/logo-img.png" class="img-white" width="180" alt="" />
 					</div>
 					<div class="card">
 						<div class="card-body">
 							<div class="border p-4 rounded">
 								<div class="text-center">
-									<h3 class="">Sign in</h3>
-									<p>Don't have an account yet? <a href="javascript:;" (click)="onSignup()">Sign up here</a>
+									<h3 class="">Iniciar sesión</h3>
+									<p>No tienes cuenta aún?
+										 <a href="javascript:;" (click)="onSignup()">Registrate aquí</a>
 									</p>
 								</div>
-								<div class="d-grid">
-									<a class="btn my-4 shadow-sm btn-light" href="javascript:;"> <span class="d-flex justify-content-center align-items-center">
-					  <img class="me-2" src="assets/images/icons/search.svg" width="16" alt="Image Description">
-					  <span>Sign in with Google</span>
+								<!-- 	<div class="d-grid">
+									<a class="btn my-4 shadow-sm btn-light" href="javascript:;"> <span
+											class="d-flex justify-content-center align-items-center">
+											<img class="me-2" src="assets/images/icons/search.svg" width="16"
+												alt="Image Description">
+											<span>Sign in with Google</span>
 										</span>
-									</a> <a href="javascript:;" class="btn btn-light"><i class="bx bxl-facebook"></i>Sign in with Facebook</a>
+									</a> <a href="javascript:;" class="btn btn-light"><i
+											class="bx bxl-facebook"></i>Sign in with Facebook</a>
 								</div>
 								<div class="login-separater text-center mb-4"> <span>OR SIGN IN WITH EMAIL</span>
-									<hr/>
-								</div>
-								<div class="form-body">
-									<form class="row g-3">
-										<div class="col-12">
-											<label for="inputEmailAddress" class="form-label">Email Address</label>
-											<input type="email" class="form-control" id="inputEmailAddress" placeholder="Email Address">
+									<hr />
+								</div> -->
+								<div class="form-body"> 
+									<form class="row g-3" [formGroup]="formLogin" class="login-form" (ngSubmit)="onSubmit()">
+										<div class="col-12 mb-3">
+											<label for="inputEmailAddress" class="form-label">Email</label>
+											<input 
+												type="email" 
+												class="form-control"
+												id="inputEmailAddress"
+												placeholder="Email" 
+												formControlName="email"
+												>
+												<ng-container *ngFor="let validation of loginValidationMessages.email">
+													<div
+														class="error-text"
+														*ngIf="
+															formLogin.get('email')?.hasError(validation.type) &&
+															(formLogin.get('email')?.dirty || formLogin.get('email')?.touched)
+														"
+													>
+														<p>{{ validation.message }}</p>
+													</div>
+												</ng-container>
 										</div>
-										<div class="col-12">
-											<label for="inputChoosePassword" class="form-label">Enter Password</label>
+										<div class="col-12 mb-3">
+											<label for="inputChoosePassword" class="form-label">Password</label>
 											<div class="input-group" id="show_hide_password">
-												<input type="password" class="form-control border-end-0" id="inputChoosePassword" value="12345678" placeholder="Enter Password"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+												<input type="password" 
+													class="form-control border-end-0"
+													id="inputChoosePassword"
+													placeholder="Enter Password"
+													formControlName="password"
+													[type]="passwordVisible? 'text' : 'password'">
+												<a 
+													href="javascript:;" 
+													class="input-group-text bg-transparent"
+													(click)="passwordVisible = !passwordVisible"
+												>
+													<i [class]="passwordVisible ? 'bx bx-hide' : 'bx bx-show'"></i>
+												</a>
 											</div>
+											<ng-container *ngFor="let validation of loginValidationMessages.password">
+												<div
+													class="error-text"
+													*ngIf="
+														formLogin.get('password')?.hasError(validation.type) &&
+														(formLogin.get('password')?.dirty || formLogin.get('password')?.touched)
+													"
+												>
+													<p>{{ validation.message }}</p>
+												</div>
+											</ng-container>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-6 mb-3">
 											<div class="form-check form-switch">
-												<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-												<label class="form-check-label" for="flexSwitchCheckChecked">Remember Me</label>
+												<input class="form-check-input" type="checkbox"
+													id="flexSwitchCheckChecked" checked>
+												<label class="form-check-label" for="flexSwitchCheckChecked">Remember
+													Me</label>
 											</div>
 										</div>
-										<div class="col-md-6 text-end">	<a href="JavaScript:;" (click)="onForgotpassword()">Forgot Password ?</a>
-										</div>
+										<!-- 	<div class="col-md-6 text-end"> <a href="JavaScript:;"
+												(click)="onForgotpassword()">Forgot Password ?</a>
+										</div> -->
 										<div class="col-12">
 											<div class="d-grid">
-												<button type="submit" class="btn btn-light"><i class="bx bxs-lock-open"></i>Sign in</button>
+												<button type="submit" class="btn btn-light"><i
+														class="bx bxs-lock-open"></i>Sign in</button>
 											</div>
 										</div>
 									</form>

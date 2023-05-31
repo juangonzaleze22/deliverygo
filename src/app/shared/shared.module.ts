@@ -9,6 +9,7 @@ import { FooterComponent } from "./footer/footer.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { ColorSwitcherComponent } from './color-switcher/color-switcher.component';
+import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component';
 
 
 
@@ -19,7 +20,8 @@ import { ColorSwitcherComponent } from './color-switcher/color-switcher.componen
         NavbarComponent,
         SidebarComponent,
         ColorSwitcherComponent,
-        NgbModule
+        NgbModule,
+        DialogConfirmComponent
     ],
     imports: [
         RouterModule,
@@ -31,7 +33,8 @@ import { ColorSwitcherComponent } from './color-switcher/color-switcher.componen
         FooterComponent,
         NavbarComponent,
         SidebarComponent,
-        ColorSwitcherComponent
+        ColorSwitcherComponent,
+        DialogConfirmComponent
     ],
     providers: [ ],
 })
