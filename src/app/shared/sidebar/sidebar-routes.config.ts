@@ -16,7 +16,7 @@ export const ROUTES_CLIENT: RouteInfo[] = [
     },
     {
         path: 'restaurants',
-        title: 'Restaurantes',
+        title: 'Negocios',
         icon: 'bx bx-restaurant', 
         class: '', 
         badge: '',
