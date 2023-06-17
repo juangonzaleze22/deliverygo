@@ -10,7 +10,9 @@ import { NavbarComponent } from "./navbar/navbar.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { ColorSwitcherComponent } from './color-switcher/color-switcher.component';
 import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component';
-
+import { LoadingComponent } from './loading/loading.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { EmptyComponent } from './empty/empty.component';
 
 
 @NgModule({
@@ -21,20 +23,25 @@ import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.componen
         SidebarComponent,
         ColorSwitcherComponent,
         NgbModule,
-        DialogConfirmComponent
+        DialogConfirmComponent,
+        LoadingComponent,
+        EmptyComponent
     ],
     imports: [
         RouterModule,
         CommonModule,
         NgbModule,
-        PerfectScrollbarModule
+        PerfectScrollbarModule,
+        MatProgressSpinnerModule
     ],
     declarations: [
         FooterComponent,
         NavbarComponent,
         SidebarComponent,
         ColorSwitcherComponent,
-        DialogConfirmComponent
+        DialogConfirmComponent,
+        LoadingComponent,
+        EmptyComponent
     ],
     providers: [ ],
 })

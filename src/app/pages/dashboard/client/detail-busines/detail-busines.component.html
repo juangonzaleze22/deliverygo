@@ -1,0 +1,54 @@
+<div class="rest">
+    <div class="rest__header">
+        <img [src]="business?.photoURL" alt="">
+    </div>
+    <div class="rest__body">
+        <h3>{{business?.name}}</h3>
+        <p>{{business?.description}}</p>
+
+        <p>{{business?.addressBusiness}}</p>
+
+        <div class="separator"></div>
+    </div>
+    <div class="res__products">
+
+        <div class="title-section">
+            <h3>Productos</h3>
+            <button class="btn btn-light" (click)="openDialogCreateProduct()">Agregar productos</button>
+        </div>
+
+        <div class="gridProducts">
+            <div class="card" *ngFor="let item of products">
+                <div class="card-image">
+                    <img [src]="globalService.urlImage(item.photo)" alt="..." class="card-img">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{item.name}}</h5>
+                    <p class="card-text">{{item.description}}</p>
+                    <p class="card-text" class="card-price">
+                        {{ item.price | slice:0:2 }},{{ item.price | slice:2:4 }}$
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <app-empty *ngIf="!loading && products.length < 1"></app-empty>
+
+        <app-loading *ngIf="loading"></app-loading>
+        <!--  <div class="card">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="assets/images/test-image.jpg" alt="..." class="card-img">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">El atico</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text"><small class="">Last updated 3 mins ago</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>

@@ -1,1 +1,11 @@
-@import './components/dialog.scss'
+@import './components/dialog.scss';
+
+form div.password { 
+    position: relative;
+    button{ 
+        position: absolute;
+        top: 28px;
+        right: 6px;
+        color: #fff;
+    }
+}

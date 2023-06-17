@@ -52,7 +52,6 @@ export class SignUpComponent implements OnInit {
       ]),
       phone: new FormControl('', [
         Validators.required,
-        Validators.minLength(11),
       ]),
       photo: new FormControl(null, [
       ]),
@@ -75,7 +74,9 @@ export class SignUpComponent implements OnInit {
         Validators.maxLength(3),
         Validators.pattern(this.patternNumber)
       ]),
-     /*  rol: new FormControl(this.globalService.ROLES[0], []), */
+      addres: new FormControl('', [
+      ]),/* 
+      rol: new FormControl(this.globalService.ROLES[0], []), */
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -97,15 +98,12 @@ export class SignUpComponent implements OnInit {
       lastname: [
         { type: 'required', message: 'Este campo es requerido' },
       ],
-      phone: [
-        { type: 'required', message: 'Este campo es requerido' },
-        { type: 'minlength', message: 'Mínimo 11 caracteres' },
-      ],
       addres: [
         { type: 'required', message: 'Este campo es requerido' },
       ],
       birthday: [
         { type: 'required', message: 'Este campo es requerido' },
+        
        {
         type: 'underage',
         message: 'Debe ser mayor de 18 años.'
@@ -217,9 +215,7 @@ export class SignUpComponent implements OnInit {
     this.loading = true;
     this.formRegister.value.photo =  this.imageUrl;
 
-    this.formRegister.value.rol ='CLIENT';
-
-    console.log("form", this.formRegister.value)
+    this.formRegister.controls['rol'].setValue('CLIENT');
     
     this.globalService.postServiceFile('auth/register',  this.formRegister.value).pipe(
       finalize(() => {
@@ -247,7 +243,7 @@ export class SignUpComponent implements OnInit {
       },
       complete: () => {
 
-      } 
+      }
     })
 
   }

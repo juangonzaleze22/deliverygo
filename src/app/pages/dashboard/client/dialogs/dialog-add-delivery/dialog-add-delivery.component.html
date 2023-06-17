@@ -66,28 +66,28 @@
                         </div>
                     </ng-container>
                 </div>
-                <div>
+                <!-- <div>
                     <google-map [height]="200" [center]="center" [zoom]="zoom" (mapClick)="moveMap($event)"
                         (mapMousemove)="move($event)"></google-map>
-                </div>
-                <div class="card-body">
+                </div> -->
+                <!-- <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="mb-1">Precio</p>
                             <h4 class="mb-0">1.5$</h4>
                         </div>
                         <div class="ms-auto">
-                           <!--  <p class="mb-0 font-13 text-white">+12.34 Increase</p>
-                            <p class="mb-0 font-13">From Last Week</p> -->
+                            <p class="mb-0 font-13 text-white">+12.34 Increase</p>
+                            <p class="mb-0 font-13">From Last Week</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-12">
                     <div class="d-flex align-items-center justify-content-center">
                         <button type="button" class="btn btn-light" style="margin-right: 10px" (click)="closeModal()">Cancelar</button>
                         <button type="submit" class="btn btn-primary" [disabled]="formDelivery.invalid || loading">
                             <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            Crear orden
+                            Crear Delivery
                         </button>
                     </div>
                 </div>

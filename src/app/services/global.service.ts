@@ -8,10 +8,12 @@ import { Observable, Subject, BehaviorSubject } from 'rxjs';
 })
 export class GlobalService {
 
+  EMPTY_IMAGE: string = 'https://placehold.it/100x100'
+
   public ROLES: string[] = [
     'CLIENT',
     'DELIVERY',
-    'RESTAURANT'
+    'RESTAURANT',
   ]
 
   public STATUS_ORDER: any[] = [
@@ -20,10 +22,24 @@ export class GlobalService {
     'ENTREGADO',
     'CANCELADO'
   ]
+  public LIST_CATEGORIES: string[] = [
+    "Electrónica",
+    "Ropa",
+    "Hogar",
+    "Deportes",
+    "Juguetes",
+    "Libros",
+    "Música",
+    "Automotriz",
+    "Comida",
+    "Zapatos"
+  ]
 
   constructor(
     private httpClient: HttpClient
-  ) { }
+  ) { 
+
+  }
 
 
   /* SERVICIOS */
@@ -105,6 +121,12 @@ export class GlobalService {
       headers = headers.set('Authorization', localStorage.getItem("token"));
     }
     return this.httpClient.post(environment.API_URL + service, data, { headers: headers });
+  }
+
+
+  urlImage(photo: string){
+    const url = photo? environment.API_URL_IMAGE + photo : this.EMPTY_IMAGE;
+    return url
   }
 
 

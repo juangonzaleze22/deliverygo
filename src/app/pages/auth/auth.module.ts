@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { SignInComponent } from './sign-in/sign-in.component';
@@ -11,6 +12,9 @@ import { SigninWithHeaderFooterComponent } from './signin-with-header-footer/sig
 import { SignupWithHeaderFooterComponent } from './signup-with-header-footer/signup-with-header-footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
 
 
 
@@ -27,6 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     AuthRoutingModule,
     ReactiveFormsModule,
+    NgxMaskModule.forRoot(maskConfig),
+
    
   ]
 })

@@ -1,0 +1,113 @@
+<div class="card m-0">
+    <div class="card-body">
+        <div class="border p-3 rounded">
+            <h6 class="mb-0 text-uppercase">Agregar producto</h6>
+            <hr />
+            <form class="row g-3" [formGroup]="formProduct" (ngSubmit)="onSubmit()">
+                <div class="col-sm-12">
+                    <label for="inputLastName" class="form-label">
+                        Imagen del producto*
+                    </label>
+                    <div class="boxImage">
+                        <label class="imageUpload" for="photoFile">
+                            <img [src]="imageUrl ? imageUrl : 'https://placehold.it/1080x1080'"
+                                alt="Preview Image">
+                            <input id="photoFile" type="file" accept="image/*"
+                                (change)="onFileChange($event.target.files)">
+                            <button type="button" class="btn" (click)="clearImage()"
+                                *ngIf="imageUrl">
+                                <i class='bx bx-x'></i>
+                            </button>
+                        </label>
+                    </div>
+                    <ng-container *ngFor="let validation of productTextValidation.photo">
+                        <div class="error-text" *ngIf="
+                                formProduct.get('photo')?.hasError(validation.type) &&
+                                (formProduct.get('photo')?.dirty || formProduct.get('photo')?.touched)
+                            ">
+                            <p>{{ validation.message }}</p>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Nombre*</label>
+                    <input formControlName="name" type="text" class="form-control">
+                    <ng-container *ngFor="let validation of productTextValidation.name">
+                        <div
+                            class="error-text"
+                            *ngIf="
+                                formProduct.get('name')?.hasError(validation.type) &&
+                                (formProduct.get('name')?.dirty || formProduct.get('name')?.touched)
+                            "
+                        >
+                            <p>{{ validation.message }}</p>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Precio*</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1">$</span>
+                        </div>
+                        <input formControlName="price" type="text" class="form-control" mask="00.00">
+                    </div>
+                    <ng-container *ngFor="let validation of productTextValidation.price" placeholder="00.00">
+                        <div
+                            class="error-text"
+                            *ngIf="
+                                formProduct.get('price')?.hasError(validation.type) &&
+                                (formProduct.get('price')?.dirty || formProduct.get('price')?.touched)
+                            "
+                        >
+                            <p>{{ validation.message }}</p>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Catgoria*</label>
+                    <select class="form-select"  formControlName="category">
+                        <option *ngFor="let item of LIST_CATEGORIES" value="item">{{item}}</option>
+                    </select>
+                    <ng-container *ngFor="let validation of productTextValidation.price" placeholder="00.00">
+                        <div
+                            class="error-text"
+                            *ngIf="
+                                formProduct.get('price')?.hasError(validation.type) &&
+                                (formProduct.get('price')?.dirty || formProduct.get('price')?.touched)
+                            "
+                        >
+                            <p>{{ validation.message }}</p>
+                        </div>
+                    </ng-container>
+                </div>
+           
+                <div class="col-12">
+                    <label class="form-label">Description</label>
+                    <textarea formControlName="description" type="text" class="form-control"></textarea>
+                    <ng-container *ngFor="let validation of productTextValidation.description">
+                        <div
+                            class="error-text"
+                            *ngIf="
+                                formProduct.get('description')?.hasError(validation.type) &&
+                                (formProduct.get('description')?.dirty || formProduct.get('description')?.touched)
+                            "
+                        >
+                            <p>{{ validation.message }}</p>
+                        </div>
+                    </ng-container>
+                </div>
+               
+                <div class="col-12">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <button type="button" class="btn btn-light" style="margin-right: 10px" (click)="closeModal()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="formProduct.invalid || loading">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Crear Delivery
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -15,7 +15,7 @@ export const ROUTES_CLIENT: RouteInfo[] = [
         submenu: []
     },
     {
-        path: 'restaurants',
+        path: 'business',
         title: 'Negocios',
         icon: 'bx bx-restaurant', 
         class: '', 
@@ -61,11 +61,37 @@ export const ROUTES_DELIVERY: RouteInfo[] = [
 
 ];
 
-export const ROUTES_RESTAURANT: RouteInfo[] = [
+export const ROUTES_BUSINESS: RouteInfo[] = [
 
     {
         path: 'home',
         title: 'Delivery',
+        icon: 'bx bx-layer', 
+        class: '', 
+        badge: '',
+        badgeClass: '', 
+        isExternalLink: false,
+        submenu: []
+    },
+ 
+];
+
+
+export const ROUTES_ADMIN   : RouteInfo[] = [
+
+    {
+        path: 'business',
+        title: 'Negocios',
+        icon: 'bx bx-restaurant', 
+        class: '', 
+        badge: '',
+        badgeClass: '', 
+        isExternalLink: false,
+        submenu: []
+    },
+    {
+        path: 'pilots',
+        title: 'Pilots',
         icon: 'bx bx-layer', 
         class: '', 
         badge: '',

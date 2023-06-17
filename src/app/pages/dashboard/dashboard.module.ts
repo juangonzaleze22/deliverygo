@@ -22,6 +22,11 @@ import { BusinessComponent } from './client/business/business.component';
 
 import {MatDialogModule} from '@angular/material/dialog';
 import { DialogAddDeliveryComponent } from './client/dialogs/dialog-add-delivery/dialog-add-delivery.component';
+import { DialogDetailDeliveryComponent } from './client/dialogs/dialog-detail-delivery/dialog-detail-delivery.component';
+import { DialogCreateBusinessComponent } from './client/dialogs/dialog-create-business/dialog-create-business.component';
+import { ImagePipe } from 'src/app/pipes/image.pipe';
+import { DetailBusinesComponent } from './client/detail-busines/detail-busines.component';
+import { DialogCreateProductComponent } from './client/dialogs/dialog-create-product/dialog-create-product.component';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -35,6 +40,10 @@ const maskConfig: Partial<IConfig> = {
      HistoryComponent,
      BusinessComponent,
      DialogAddDeliveryComponent,
+     DialogDetailDeliveryComponent,
+     DialogCreateBusinessComponent,
+     DetailBusinesComponent,
+     DialogCreateProductComponent,
   ],
   imports: [
     CommonModule,

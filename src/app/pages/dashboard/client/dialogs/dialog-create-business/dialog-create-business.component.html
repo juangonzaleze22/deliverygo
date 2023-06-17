@@ -1,0 +1,173 @@
+<div class="card m-0">
+    <div class="card-body">
+        <div class="border p-3 rounded">
+            <h6 class="mb-0 text-uppercase">Agregar negocio</h6>
+            <hr />
+            <form class="row g-3" [formGroup]="formBusiness" (ngSubmit)="onSubmit('business')">
+                <div class="col-sm-12">
+                    <label for="inputLastName" class="form-label">
+                        Foto
+                    </label>
+                    <div class="boxImage">
+                        <label class="imageUpload" for="photoFile">
+                            <img [src]="imageUrl ? imageUrl : 'https://placehold.it/1080x1080'"
+                                alt="Preview Image"  width="100%">
+                            <input id="photoFile" type="file" accept="image/*"
+                                (change)="onFileChange($event.target.files)">
+                            <button type="button" class="btn" (click)="clearImage()"
+                                *ngIf="imageUrl">
+                                <i class='bx bx-x'></i>
+                            </button>
+                        </label>
+                    </div>
+                    <ng-container *ngFor="let validation of deliveryTextValidation.photo">
+                        <div class="error-text" *ngIf="
+                                formBusiness.get('photo')?.hasError(validation.type) &&
+                                (formBusiness.get('photo')?.dirty || formBusiness.get('photo')?.touched)
+                            ">
+                            <p>{{ validation.message }}</p>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Nombre del establecimiento*</label>
+                    <input formControlName="name" type="text" class="form-control">
+                    <ng-container *ngFor="let validation of deliveryTextValidation.name">
+                        <div
+                            class="error-text"
+                            *ngIf="
+                                formBusiness.get('name')?.hasError(validation.type) &&
+                                (formBusiness.get('name')?.dirty || formBusiness.get('name')?.touched)
+                            "
+                        >
+                            <p>{{ validation.message }}</p>
+                        </div>
+                    </ng-container>
+                </div>
+         
+                <div class="col-6">
+                    <label class="form-label">Número de contacto*</label>
+                    <input 
+                        formControlName="phone"
+                        type="text" class="form-control" 
+                        mask="(0000) 000-0000" 
+                        placeholder="(0000) 000-0000"
+                        maxLength="15"
+                    >
+                        <ng-container *ngFor="let validation of deliveryTextValidation.phone">
+                            <div
+                                class="error-text"
+                                *ngIf="
+                                    formBusiness.get('phone')?.hasError(validation.type) &&
+                                    (formBusiness.get('phone')?.dirty || formBusiness.get('phone')?.touched)
+                                "
+                            >
+                                <p>{{ validation.message }}</p>
+                            </div>
+                        </ng-container>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Descripción</label>
+                    <textarea formControlName="description" type="text" class="form-control"></textarea>
+                    <ng-container *ngFor="let validation of deliveryTextValidation.description">
+                        <div
+                            class="error-text"
+                            *ngIf="
+                                formBusiness.get('description')?.hasError(validation.type) &&
+                                (formBusiness.get('description')?.dirty || formBusiness.get('description')?.touched)
+                            "
+                        >
+                            <p>{{ validation.message }}</p>
+                        </div>
+                    </ng-container>
+                </div>
+
+                
+                <div class="col-sm-6">
+                    <label for="inputFirstName" class="form-label">Email*</label>
+                    <input type="email" class="form-control" formControlName="email">
+            
+                    <ng-container *ngFor="let validation of deliveryTextValidation.email">
+                        <div class="error-text" *ngIf="
+                                formBusiness.get('email')?.hasError(validation.type) &&
+                                (formBusiness.get('email')?.dirty || formBusiness.get('email')?.touched)
+                            ">
+                            <p>{{ validation.message }}</p>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Dirección*</label>
+                    <input formControlName="addressBusiness" type="text" class="form-control">
+                    <ng-container *ngFor="let validation of deliveryTextValidation.addressBusiness">
+                        <div
+                            class="error-text"
+                            *ngIf="
+                                formBusiness.get('addressBusiness')?.hasError(validation.type) &&
+                                (formBusiness.get('addressBusiness')?.dirty || formBusiness.get('addressBusiness')?.touched)
+                            "
+                        >
+                            <p>{{ validation.message }}</p>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="col-sm-12 password">
+                    <label for="inputFirstName" class="form-label">Contraseña*</label>
+                    <input [type]="!passwordVisible? 'password' : 'text'" class="form-control" formControlName="password">
+                    <button class="btn btn-password" type="button" (click)="passwordVisible = !passwordVisible">
+                        <i class='bx' [ngClass]="!passwordVisible ? 'bx-show' : 'bx-low-vision'"></i>
+                    </button>
+                    <ng-container *ngFor="let validation of deliveryTextValidation.password">
+                        <div class="error-text" *ngIf="
+                                formBusiness.get('password')?.hasError(validation.type) &&
+                                (formBusiness.get('password')?.dirty || formBusiness.get('password')?.touched)
+                            ">
+                            <p>{{ validation.message }}</p>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="col-sm-12 password">
+                    <label for="inputFirstName" class="form-label">Confirmar contraseña*</label>
+                    <input [type]="!cpasswordVisible? 'password' : 'text'" class="form-control" formControlName="cpassword">
+                    <button class="btn btn-password" type="button" (click)="cpasswordVisible = !cpasswordVisible">
+                        <i class='bx' [ngClass]="!cpasswordVisible ? 'bx-show' : 'bx-low-vision'"></i>
+                    </button>
+                    <ng-container *ngFor="let validation of deliveryTextValidation.cpassword">
+                        <div class="error-text" *ngIf="
+                                formBusiness.get('cpassword')?.hasError(validation.type) &&
+                                (formBusiness.get('cpassword')?.dirty || formBusiness.get('cpassword')?.touched)
+                            ">
+                            <p>{{ validation.message }}</p>
+                        </div>
+                    </ng-container>
+                </div>
+                <!-- <div>
+                    <google-map [height]="200" [center]="center" [zoom]="zoom" (mapClick)="moveMap($event)"
+                        (mapMousemove)="move($event)"></google-map>
+                </div> -->
+                <!-- <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-1">Precio</p>
+                            <h4 class="mb-0">1.5$</h4>
+                        </div>
+                        <div class="ms-auto">
+                            <p class="mb-0 font-13 text-white">+12.34 Increase</p>
+                            <p class="mb-0 font-13">From Last Week</p>
+                        </div>
+                    </div>
+                </div> -->
+       
+                <div class="col-12">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <button type="button" class="btn btn-light" style="margin-right: 10px" (click)="closeModal()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="formBusiness.invalid || loading">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Crear Negocio
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

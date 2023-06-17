@@ -6,6 +6,7 @@ import { GlobalService } from 'src/app/services/global.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { DialogConfirmComponent } from 'src/app/shared/dialog-confirm/dialog-confirm.component';
+import { DialogDetailDeliveryComponent } from '../dialogs/dialog-detail-delivery/dialog-detail-delivery.component';
 
 @Component({
   selector: 'app-home',
@@ -65,8 +66,14 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  showDelivery(delivery) {
-    console.log(delivery)
+  showDelivery(idDelivery: string) {
+    const dialogRef = this.dialog.open(DialogDetailDeliveryComponent, {
+      width: '360px', 
+      data: {
+        idDelivery
+      } 
+    });
+
   }
 
   updateDelivery(delivery) {

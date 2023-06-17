@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from "@angular/common/http";
@@ -25,12 +26,17 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 };
 import { ToastrModule } from 'ngx-toastr';
 
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
 
 import * as $ from 'jquery';
+import { ImagePipe } from './pipes/image.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent,/* 
+    AppComponent,
+    ImagePipe,/* 
     FullLayoutComponent,
     ContentLayoutComponent, */
   ],
@@ -46,7 +52,9 @@ import * as $ from 'jquery';
     PerfectScrollbarModule,
     ToastrModule.forRoot({
       positionClass :'toast-bottom-right'
-    })
+    }),
+    NgxMaskModule.forRoot(maskConfig),
+
   ],
   providers: [
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }

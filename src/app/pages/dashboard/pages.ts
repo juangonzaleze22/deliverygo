@@ -3,15 +3,16 @@ import { HistoryComponent } from './client/history/history.component';
 import { UserProfileComponent } from './client/user-profile/user-profile.component';
 import { HomeComponent as HomeClientComponent } from './client/home/home.component';
 import { HomeComponent } from './pilot/home/home.component';
+import { DetailBusinesComponent } from './client/detail-busines/detail-busines.component';
 
 
-export const PAGES_CLIENT = [
+export const ROUTES = [
     {
         path: 'home',
         component: HomeClientComponent
     },
     {
-        path: 'restaurants',
+        path: 'business',
         component: BusinessComponent
     },
     {
@@ -22,40 +23,26 @@ export const PAGES_CLIENT = [
         path: 'profile',
         component: UserProfileComponent
     },
-    { path: '**', redirectTo: 'home' }
-]
-
-export const PAGES_RESTAURANT = [
-   /*  {
-        path: 'asd',
-        component: DefaultComponent,
-        data: {
-            title: 'Default'
-        }
-    } */
-]
-
-export const PAGES_PILOT = [
     {
         path: 'home',
         component: HomeComponent,
     },
-    { path: '**', redirectTo: 'home' }
-]
-
-export const PAGES_ADMIN = [
-    /* {
-        path: 'default',
-        component: DefaultComponent,
-        data: {
-            title: 'Default'
-        }
+    {
+        path: 'business',
+        component: BusinessComponent
     },
     {
-        path: 'eCommerce',
-        component: ECommerceComponent,
-        data: {
-            title: 'eCommerce'
-        }
-    }, */
+        path: 'detail-business/:id',
+        component: DetailBusinesComponent
+    },
+    {
+        path: 'detail-business',
+        component: DetailBusinesComponent
+    },
+    {
+        path: 'pilots',
+        component: BusinessComponent
+    },
+    { path: '**', redirectTo: 'home' },
+
 ]
