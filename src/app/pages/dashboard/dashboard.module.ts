@@ -17,6 +17,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { HomeComponent } from './client/home/home.component';
+import { HomeComponent as HomePilotComponent } from './pilot/home/home.component';
 import { HistoryComponent } from './client/history/history.component';
 import { BusinessComponent } from './client/business/business.component';
 
@@ -27,6 +28,8 @@ import { DialogCreateBusinessComponent } from './client/dialogs/dialog-create-bu
 import { ImagePipe } from 'src/app/pipes/image.pipe';
 import { DetailBusinesComponent } from './client/detail-busines/detail-busines.component';
 import { DialogCreateProductComponent } from './client/dialogs/dialog-create-product/dialog-create-product.component';
+import { DialogCreatePilotComponent } from './pilot/dialogs/dialog-create-pilot/dialog-create-pilot.component';
+import { DetailDeliveryComponent } from './pilot/detail-delivery/detail-delivery.component';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -37,6 +40,7 @@ const maskConfig: Partial<IConfig> = {
   declarations: [
     DashboardComponent,
      HomeComponent,
+     HomePilotComponent,
      HistoryComponent,
      BusinessComponent,
      DialogAddDeliveryComponent,
@@ -44,6 +48,8 @@ const maskConfig: Partial<IConfig> = {
      DialogCreateBusinessComponent,
      DetailBusinesComponent,
      DialogCreateProductComponent,
+     DialogCreatePilotComponent,
+     DetailDeliveryComponent,
   ],
   imports: [
     CommonModule,

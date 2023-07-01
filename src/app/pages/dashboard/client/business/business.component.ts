@@ -17,6 +17,7 @@ export class BusinessComponent implements OnInit {
 
   loading: boolean = false;
   business;
+  dataUser: any;
 
   constructor(
     private dialog: MatDialog,
@@ -26,11 +27,14 @@ export class BusinessComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.dataUser = localStorage.getItem('user')!;
     this.getAllBusiness();
   }
 
-  openDialogAddBusiness() {
-    this.dialog.open(DialogCreateBusinessComponent)
+  openDialogAddBusiness(idBusiness:string = null) {
+    this.dialog.open(DialogCreateBusinessComponent,{
+      data: idBusiness
+    })
       .afterClosed().subscribe(resp => {
         console.log(resp)
         if (resp?.reload) {
@@ -73,6 +77,22 @@ export class BusinessComponent implements OnInit {
 
       }
     })
+  }
+
+
+  async deleteBusinessById(idBusiness: string) {
+    try {
+      const result = await this.globalService.deleteService(`users/deleteUser/${idBusiness}`).toPromise();
+      const { status, data }: any = result;
+      if (status == 'success') {
+        this.getAllBusiness();
+      } else {
+        throw new Error('An error occurred while fetching the data');
+      }
+    } catch (error) {
+      console.log(error);
+      throw new Error('An error occurred while fetching the data');
+    }
   }
 
 }

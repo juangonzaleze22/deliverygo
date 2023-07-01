@@ -1,0 +1,118 @@
+<!--end row-->
+
+<div class="row">
+    <div class="col-6">
+        <div *ngIf="dataUser?.status != 'BUSY'" class="card radius-10 " [ngClass]="{
+            'card-active': dataUser?.status == 'ACTIVE',
+            'card-inactive': dataUser?.status == 'INACTIVE'
+        }" (click)="changeStatus()">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="mb-0 text-white">Status</p>
+                        <h4 class="my-1 text-white">{{dataUser?.status == 'ACTIVE'? 'Disponible' : dataUser?.status ==
+                            'INACTIVE'?
+                            'No disponible' : 'Ocupado'}}</h4>
+                    </div>
+                    <div class="text-white ms-auto font-35">
+                        <i class='bx ' [ngClass]="{
+                            'bx-user-check': dataUser?.status == 'ACTIVE',
+                            'bx-user-x': dataUser?.status == 'INACTIVE',
+                            'bx-car': dataUser?.status == 'BUSY'
+                        }"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="dataUser?.status == 'BUSY'" class="card radius-10 " [ngClass]="{
+            'card-busy': dataUser?.status == 'BUSY'
+        }">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="mb-0 text-white">Status</p>
+                        <h4 class="my-1 text-white">Ocupado</h4>
+                        <p>Para cambiar el status como activo u ocupado necesitas culminar el delivery pendiente</p>
+                    </div>
+                    <div class="text-white ms-auto font-35">
+                        <i class='bx ' [ngClass]="{
+                            'bx-user-check': dataUser?.status == 'ACTIVE',
+                            'bx-user-x': dataUser?.status == 'INACTIVE',
+                            'bx-car': dataUser?.status == 'BUSY'
+                        }"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h6 class="mb-0 text-uppercase d-flex align-items-center justify-content-between">
+        Detalle de delivery
+    </h6>
+    <hr />
+    <div class="col-12">
+        <div class="card cardDetail" *ngIf="deliveryInfo">
+            <div class="row">
+                <div class="col-6">
+                    <div id="map"></div>
+                </div>
+                <div class="col-6">
+                    <div class="infoUser">
+                        <img src="https://placehold.it/100x100" alt="..." class="card-img">
+                        <div class="infoUser__body">
+                            <small>Usuario</small>
+                            <h5>{{deliveryInfo.user.name}}</h5>
+                            <p>{{deliveryInfo.user.phone}}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mt-4">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <h6 class="mb-0">Titulo</h6>
+                                <p>{{deliveryInfo.title}}</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <h6 class="mb-0">Distance</h6>
+                                <p>{{deliveryInfo.distance}} km</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <h6 class="mb-0">Fecha</h6>
+                                <p>{{deliveryInfo.createdAt | date: 'dd/MM/YYYY'}}</p>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <h6 class="mb-0">Descripción</h6>
+                                <p>{{deliveryInfo.description}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="col-12">
+                            <div class="buttons">
+                                <button class="btn btn-light">Cancelar</button>
+                                <button class="ms-3 btn btn-primary" (click)="confirmToSuccess()" [disabled]="loadingInfoConfirm">
+                                    <span *ngIf="loadingInfoConfirm" class="spinner-border spinner-border-sm" role="status"
+                                        aria-hidden="true"></span>
+                                    Realizado
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card cardDetail" *ngIf="!deliveryInfo">
+            <div class="row">
+                <div class="col-6">
+                    empty
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -46,7 +46,7 @@ export class DetailBusinesComponent implements OnInit {
           this.business = data;
           console.log("business", this.business);
           return this.globalService.getService(`products/getAllProductsByBusiness/${data._id}`, 1);
-        }else {
+        } else {
           return of({ status: 'error', data: null }); // Devuelve un valor predeterminado en caso de que el primer llamado no tenga éxito
         }
       }),
@@ -68,10 +68,10 @@ export class DetailBusinesComponent implements OnInit {
       }
     })
   }
-  
+
   openDialogCreateProduct() {
 
-    const {_id: idBusiness} = this.business;
+    const { _id: idBusiness } = this.business;
 
     console.log(idBusiness)
 
@@ -83,7 +83,7 @@ export class DetailBusinesComponent implements OnInit {
       .afterClosed().subscribe(resp => {
         console.log(resp)
         if (resp?.reload) {
-           this.getBusinessById();
+          this.getBusinessById();
         }
       });
   }

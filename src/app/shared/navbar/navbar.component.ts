@@ -44,7 +44,6 @@ export class NavbarComponent implements OnInit{
 
     ngOnInit() {
         this.userInfo = this.authService.getUser()
-        console.log(this.userInfo)
 
         this.imgProfile = this.userInfo.photo ? environment.API_URL_IMAGE + this.userInfo.photo : 'https://placehold.it/100x100';
         /* Search Bar */

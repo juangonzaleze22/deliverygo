@@ -12,12 +12,12 @@ import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-dialog-create-business',
-  templateUrl: './dialog-create-business.component.html',
-  styleUrls: ['./dialog-create-business.component.scss']
+  selector: 'app-dialog-create-pilot',
+  templateUrl: './dialog-create-pilot.component.html',
+  styleUrls: ['./dialog-create-pilot.component.scss']
 })
+export class DialogCreatePilotComponent implements OnInit {
 
-export class DialogCreateBusinessComponent implements OnInit {
 
   formBusiness: FormGroup;
   deliveryTextValidation;
@@ -47,8 +47,7 @@ export class DialogCreateBusinessComponent implements OnInit {
     this.isUpdate = this.data ? true : false;
     this.initForm();
     if (this.isUpdate) {
-      const dataBusiness = await this.getInfoBusiness(this.data);
-      console.log(dataBusiness)
+      const dataBusiness = await this.getInfoPilot(this.data);
       this.formBusiness.patchValue(dataBusiness);
       this.formBusiness.removeControl('password');
       this.formBusiness.removeControl('cpassword');
@@ -69,9 +68,6 @@ export class DialogCreateBusinessComponent implements OnInit {
       phone: new FormControl('', [
         Validators.required,
 
-      ]),
-      addressBusiness: new FormControl('', [
-        Validators.required,
       ]),
       email: new FormControl('', [
         Validators.required,
@@ -119,9 +115,6 @@ export class DialogCreateBusinessComponent implements OnInit {
           type: 'maxSize', message: 'La imagen es demasiado grande, máximo 8mb'
         },
 
-      ],
-      addressBusiness: [
-        { type: 'required', message: 'Este campo es requerido' },
       ],
       email: [
         { type: 'required', message: 'Este campo es requerido' },
@@ -179,9 +172,6 @@ export class DialogCreateBusinessComponent implements OnInit {
         return;
       }
       reader.readAsDataURL(file);
-
-      console.log(file)
-
       reader.onload = (event: any) => {
         const base64 = event.target.result;
         this.imageUrl = base64
@@ -194,7 +184,8 @@ export class DialogCreateBusinessComponent implements OnInit {
   onSubmit(type: string) {
     this.loading = true;
     this.formBusiness.value.photo = this.imageUrl;
-    this.formBusiness.value.rol = 'BUSINESS';
+    this.formBusiness.value.rol = 'PILOT';
+    this.formBusiness.value.status = 'ACTIVE';
 
     const url = this.isUpdate ? 'users/updateUser' : 'auth/register';
     const urlToSubmit = this.globalService.postService(url, this.formBusiness.value);
@@ -214,7 +205,7 @@ export class DialogCreateBusinessComponent implements OnInit {
         }
 
         if (status == 'success') {
-          this.toastService.showSuccess(`El negocio se ha ${msg} correctamente`, "Success");
+          this.toastService.showSuccess(`El piloto se ha ${msg} correctamente`, "Success");
           this.dialogRef.close({
             reload: true
           });
@@ -231,21 +222,12 @@ export class DialogCreateBusinessComponent implements OnInit {
 
   }
 
-
-  adultValidator(control: AbstractControl): ValidationErrors | null {
-    const birthdate = new Date(control.value);
-    const ageInMs = Date.now() - birthdate.getTime();
-    const ageDate = new Date(ageInMs);
-    const age = Math.abs(ageDate.getUTCFullYear() - 1970);
-    return age < 18 ? { 'underage': true } : null;
-  }
-
-  async getInfoBusiness(idBusiness: string): Promise<any> {
+  async getInfoPilot(idPilot: string): Promise<any> {
     try {
-      const result = await this.globalService.getService(`users/getBusinesById/${idBusiness}`).toPromise();
+      const result = await this.globalService.getService(`users/getPilotById/${idPilot}`).toPromise();
       const { status, data }: any = result;
       if (status == 'success') {
-        /* this.toastService.showSuccess(`El negocio se ha eliminado correctamente`, "Success"); */
+        return data;
       } else {
         throw new Error('An error occurred while fetching the data');
       }
@@ -265,6 +247,5 @@ export class DialogCreateBusinessComponent implements OnInit {
     const urlPath = url.startsWith("/uploads") ? environment.API_URL_IMAGE + url : url;
     return urlPath
   }
-
 
 }

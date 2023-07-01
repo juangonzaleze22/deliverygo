@@ -22,6 +22,7 @@ export class GlobalService {
     'ENTREGADO',
     'CANCELADO'
   ]
+  
   public LIST_CATEGORIES: string[] = [
     "Electrónica",
     "Ropa",

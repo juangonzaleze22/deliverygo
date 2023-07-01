@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogAddDeliveryComponent } from '../dialogs/dialog-add-delivery/dialog-add-delivery.component';
 import { finalize } from 'rxjs/operators';
 import { GlobalService } from 'src/app/services/global.service';
@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { DialogConfirmComponent } from 'src/app/shared/dialog-confirm/dialog-confirm.component';
 import { DialogDetailDeliveryComponent } from '../dialogs/dialog-detail-delivery/dialog-detail-delivery.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,14 +16,16 @@ import { DialogDetailDeliveryComponent } from '../dialogs/dialog-detail-delivery
 })
 export class HomeComponent implements OnInit {
 
-  deliveries: any;
+  deliveries: any[] = [];
   loading: boolean = false;
 
   constructor(
     public dialog: MatDialog,
     public globalService: GlobalService,
     private authService: AuthService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router
+
   ) { }
 
   ngOnInit(): void {
@@ -31,13 +34,15 @@ export class HomeComponent implements OnInit {
   }
 
   addDelivery() {
-    this.dialog.open(DialogAddDeliveryComponent)
-    .afterClosed().subscribe(resp => { 
-      console.log(resp)
-      if (resp?.reload){
-        this.getAllDeliveries();
-      }
-    });
+    this.dialog.open(DialogAddDeliveryComponent, {
+      panelClass: 'dialog-add-delivery',
+    })
+      .afterClosed().subscribe(resp => {
+        console.log(resp)
+        if (resp?.reload) {
+          this.getAllDeliveries();
+        }
+      });
   }
 
   getAllDeliveries() {
@@ -54,7 +59,7 @@ export class HomeComponent implements OnInit {
         const { status, data } = result;
         if (status == 'success') {
           console.log("data", data)
-          this.deliveries = data;
+          this.deliveries = data.filter(delivery => delivery.status !== 'COMPLETE');
         }
       },
       error: (error) => {
@@ -66,14 +71,11 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  showDelivery(idDelivery: string) {
-    const dialogRef = this.dialog.open(DialogDetailDeliveryComponent, {
-      width: '360px', 
-      data: {
-        idDelivery
-      } 
+  showDelivery(delivery: any) {
+    this.dialog.open(DialogDetailDeliveryComponent, {
+      data: delivery,
+      panelClass: 'dialog-add-delivery',
     });
-
   }
 
   updateDelivery(delivery) {
@@ -113,12 +115,18 @@ export class HomeComponent implements OnInit {
         confirmButton: 'Confirmar'
       } // define el mensaje que aparecerá en el modal
     });
-  
+
     // Escuchar el resultado del modal
     dialogRef.afterClosed().subscribe(result => {
-      if (result){ 
+      if (result) {
         this.deleteDelivery(id)
       }
     });
   }
+
+  goToBusiness(){ 
+    this.router.navigate(['/dashboard/business']);
+  }
+
+
 }

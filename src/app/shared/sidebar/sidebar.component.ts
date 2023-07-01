@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTES_CLIENT, ROUTES_DELIVERY, ROUTES_BUSINESS, ROUTES_ADMIN } from './sidebar-routes.config';
+import { ROUTES_CLIENT, ROUTES_PILOT, ROUTES_BUSINESS, ROUTES_ADMIN } from './sidebar-routes.config';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { SidebarService } from "./sidebar.service";
 
@@ -87,8 +87,8 @@ export class SidebarComponent implements OnInit {
             this.menuItems = ROUTES_CLIENT.filter(menuItem => menuItem);
         }
 
-        if ( rol == 'DELIVERY') { 
-            this.menuItems = ROUTES_DELIVERY.filter(menuItem => menuItem);
+        if ( rol == 'PILOT') { 
+            this.menuItems = ROUTES_PILOT.filter(menuItem => menuItem);
         }
 
         if ( rol == 'BUSINESS') { 

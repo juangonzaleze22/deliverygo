@@ -1,7 +1,7 @@
 <!--end row-->
 <h6 class="mb-0 text-uppercase d-flex align-items-center justify-content-between">
 	Negocios asociados
-	<button class="btn btn-primary" (click)="openDialogAddBusiness()">Agregar</button>
+	<button class="btn btn-primary" (click)="openDialogAddBusiness()" *ngIf="dataUser.rol == 'ADMIN'">Agregar</button>
 </h6>
 <hr />
 <div class="gridCards">
@@ -10,7 +10,7 @@
 			<img [src]="item.photoURL" alt="..." class="card-img">
 			<div class="card-body">
 				<h5 class="card-title">{{item.name}}</h5>
-				<p class="card-text">{{item.descripton}}</p>
+				<p class="card-text">{{item.description}}</p>
 				<p class="card-text"><small class="">{{item.addressBusiness}}</small>
 				</p>
 			</div>
@@ -19,8 +19,23 @@
 					Ver Productos
 				</button>
 			</div>
+			<div class="backcard">
+				<button type="button" class="btn btn-warning" (click)="openDialogAddBusiness(item._id)">
+					<i class='bx bx-pencil'></i>
+				</button>
+				<button type="button" class="btn btn-danger" (click)="deleteBusinessById(item._id)">
+					<i class='bx bx-x'></i>
+				</button>
+			</div>
 		</div>
 	</div>
+</div>
+<div class="card">
+	<app-empty
+		*ngIf="business.length < 1"
+		icon="bx bxs-store"
+		text="No hay negocios registrados<br> por el momento"
+	></app-empty>
 </div>
 
 <app-loading *ngIf="loading"></app-loading>

@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+@import 'mapbox-gl/dist/mapbox-gl.css';
 
 .error-text {
     color: #aa0101;
@@ -43,7 +45,7 @@ app-footer{
         position: relative;
         img{
             width: 100%;
-            height: 300px;
+            height: 220px;
             object-fit: cover;
             cursor: pointer;
         }
@@ -71,6 +73,106 @@ app-footer{
         }
     }
 }
+
+//toggle button
+.toggle {
+	cursor: pointer;
+	display: inline-block;
+}
+.toggle-switch {
+	display: inline-block;
+	background: #ccc;
+	border-radius: 16px;
+	width: 58px;
+	height: 32px;
+	position: relative;
+	vertical-align: middle;
+	transition: background 0.25s;
+	&:before,
+	&:after {
+		content: "";
+	}
+	&:before {
+		display: block;
+		background: linear-gradient(to bottom, #fff 0%,#eee 100%);
+		border-radius: 50%;
+		box-shadow: 0 0 0 1px rgba(0,0,0,0.25);
+		width: 24px;
+		height: 24px;
+		position: absolute;
+		top: 4px;
+		left: 4px;
+		transition: left 0.25s;
+	}
+	.toggle:hover &:before {
+		background: linear-gradient(to bottom, #fff 0%,#fff 100%);
+		box-shadow: 0 0 0 1px rgba(0,0,0,0.5);
+	}
+	.toggle-checkbox:checked + & {
+		background: #008cff;
+		&:before {
+			left: 30px;
+		}
+	}
+}
+.toggle-checkbox {
+	position: absolute;
+	visibility: hidden;
+}
+.toggle-label {
+	margin-left: 5px;
+	position: relative;
+	top: 2px;
+}
+
+.card{
+    position: relative;
+    overflow: hidden;
+    &:hover {
+        .backcard {
+        transition: .3s ease-in-out;
+        transform: translateY(0px);
+        }
+    }
+    
+    .backcard {
+        position: absolute;
+        top: 0;
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        gap: 1rem;
+        top: 0;
+        right: 0;
+        left: 0;
+        padding: 8px 16px;
+        transform: translateY(-80px);
+        transition: .3s ease-in-out;
+        .btn {
+            border-radius: 50%;
+            padding: 0;
+            height: 2.5rem;
+            width: 2.5rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            i {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+.dialog-add-delivery{
+    width: 100%;
+    .mat-dialog-container{
+        max-width: 1000px;
+    }
+}
+
 
 
 @import 'themes/main.scss'

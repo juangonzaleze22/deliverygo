@@ -94,8 +94,10 @@
 										</div> -->
 										<div class="col-12">
 											<div class="d-grid">
-												<button type="submit" class="btn btn-light"><i
-														class="bx bxs-lock-open"></i>Sign in</button>
+												<button type="submit" class="btn btn-light">
+													<span *ngIf="loading" class="spinner-border spinner-border-sm"
+														role="status" aria-hidden="true"></span>
+													<i class="bx bxs-lock-open"></i>Sign in</button>
 											</div>
 										</div>
 									</form>

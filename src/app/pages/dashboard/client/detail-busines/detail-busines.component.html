@@ -7,6 +7,10 @@
         <p>{{business?.description}}</p>
 
         <p>{{business?.addressBusiness}}</p>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+            <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+        </div>
 
         <div class="separator"></div>
     </div>
@@ -32,7 +36,9 @@
             </div>
         </div>
 
-        <app-empty *ngIf="!loading && products.length < 1"></app-empty>
+        <app-empty *ngIf="!loading && products.length < 1" 
+            icon="bx bx-sad"
+            text="Aún no hay<br> productos creados"></app-empty>
 
         <app-loading *ngIf="loading"></app-loading>
         <!--  <div class="card">

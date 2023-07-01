@@ -2,8 +2,9 @@ import { BusinessComponent } from './client/business/business.component';
 import { HistoryComponent } from './client/history/history.component';
 import { UserProfileComponent } from './client/user-profile/user-profile.component';
 import { HomeComponent as HomeClientComponent } from './client/home/home.component';
-import { HomeComponent } from './pilot/home/home.component';
+import { HomeComponent as HomePilotComponent} from './pilot/home/home.component';
 import { DetailBusinesComponent } from './client/detail-busines/detail-busines.component';
+import { DetailDeliveryComponent } from './pilot/detail-delivery/detail-delivery.component';
 
 
 export const ROUTES = [
@@ -24,10 +25,6 @@ export const ROUTES = [
         component: UserProfileComponent
     },
     {
-        path: 'home',
-        component: HomeComponent,
-    },
-    {
         path: 'business',
         component: BusinessComponent
     },
@@ -41,7 +38,11 @@ export const ROUTES = [
     },
     {
         path: 'pilots',
-        component: BusinessComponent
+        component: HomePilotComponent
+    },
+    {
+        path: 'detail-delivery',
+        component: DetailDeliveryComponent
     },
     { path: '**', redirectTo: 'home' },
 

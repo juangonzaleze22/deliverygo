@@ -1,7 +1,7 @@
 <div class="card m-0">
     <div class="card-body">
         <div class="border p-3 rounded">
-            <h6 class="mb-0 text-uppercase">{{isUpdate ? 'Actualizar' : 'Crear'}} negocio</h6>
+            <h6 class="mb-0 text-uppercase">{{isUpdate ? 'Actualizar' : 'Crear'}} piloto</h6>
             <hr />
             <form class="row g-3" [formGroup]="formBusiness" (ngSubmit)="onSubmit('business')">
                 <div class="col-sm-12">
@@ -29,8 +29,8 @@
                         </div>
                     </ng-container>
                 </div>
-                <div class="col-12">
-                    <label class="form-label">Nombre del establecimiento*</label>
+                <div class="col-6">
+                    <label class="form-label">Nombre del piloto*</label>
                     <input formControlName="name" type="text" class="form-control">
                     <ng-container *ngFor="let validation of deliveryTextValidation.name">
                         <div
@@ -66,24 +66,7 @@
                             </div>
                         </ng-container>
                 </div>
-                <div class="col-12">
-                    <label class="form-label">Descripción</label>
-                    <textarea formControlName="description" type="text" class="form-control"></textarea>
-                    <ng-container *ngFor="let validation of deliveryTextValidation.description">
-                        <div
-                            class="error-text"
-                            *ngIf="
-                                formBusiness.get('description')?.hasError(validation.type) &&
-                                (formBusiness.get('description')?.dirty || formBusiness.get('description')?.touched)
-                            "
-                        >
-                            <p>{{ validation.message }}</p>
-                        </div>
-                    </ng-container>
-                </div>
-
-                
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <label for="inputFirstName" class="form-label">Email*</label>
                     <input type="email" class="form-control" formControlName="email">
             
@@ -92,21 +75,6 @@
                                 formBusiness.get('email')?.hasError(validation.type) &&
                                 (formBusiness.get('email')?.dirty || formBusiness.get('email')?.touched)
                             ">
-                            <p>{{ validation.message }}</p>
-                        </div>
-                    </ng-container>
-                </div>
-                <div class="col-6">
-                    <label class="form-label">Dirección*</label>
-                    <input formControlName="addressBusiness" type="text" class="form-control">
-                    <ng-container *ngFor="let validation of deliveryTextValidation.addressBusiness">
-                        <div
-                            class="error-text"
-                            *ngIf="
-                                formBusiness.get('addressBusiness')?.hasError(validation.type) &&
-                                (formBusiness.get('addressBusiness')?.dirty || formBusiness.get('addressBusiness')?.touched)
-                            "
-                        >
                             <p>{{ validation.message }}</p>
                         </div>
                     </ng-container>
@@ -163,7 +131,7 @@
                         <button type="button" class="btn btn-light" style="margin-right: 10px" (click)="closeModal()">Cancelar</button>
                         <button type="submit" class="btn btn-primary" [disabled]="formBusiness.invalid || loading">
                             <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            {{isUpdate ? 'Actualizar' : 'Crear'}} Negocio
+                            {{isUpdate ? 'Actualizar' : 'Crear'}} piloto
                         </button>
                     </div>
                 </div>
