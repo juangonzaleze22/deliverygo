@@ -1,0 +1,30 @@
+.cardProduct {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 10px;
+    .card-body{ 
+        padding: 7.5px 1rem;
+    }
+    &__img {
+        width: 44px;
+        height: 34px;
+        border-radius: 10px;/* 
+        margin: 10px; */
+    }
+    &__title {
+        margin: 0;
+        font-size: .875rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 180px;
+    }
+    &__btnRemove {
+        border-radius: 10px;
+        i {
+            font-size: 28px;
+            color: #d40101;
+        }
+    }
+}

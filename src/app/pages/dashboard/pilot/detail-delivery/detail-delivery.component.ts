@@ -53,6 +53,9 @@ export class DetailDeliveryComponent implements OnInit {
       next: (response: any) => {
         const { status, data } = response;
         if (status == 'success') {
+
+          console.log("data", data)
+
           this.deliveryInfo = data[0]
           const { coordinates } = this.deliveryInfo;
           setTimeout(() => {

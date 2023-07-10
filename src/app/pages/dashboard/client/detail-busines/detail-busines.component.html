@@ -5,20 +5,14 @@
     <div class="rest__body">
         <h3>{{business?.name}}</h3>
         <p>{{business?.description}}</p>
-
         <p>{{business?.addressBusiness}}</p>
-        <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-            <label class="form-check-label" for="flexSwitchCheckChecked"></label>
-        </div>
-
         <div class="separator"></div>
     </div>
-    <div class="res__products">
+    <div class="res__products pb-5">
 
         <div class="title-section">
             <h3>Productos</h3>
-            <button class="btn btn-light" (click)="openDialogCreateProduct()">Agregar productos</button>
+            <button class="btn btn-light" (click)="openDialogCreateProduct()"  *ngIf="dataUser.rol == 'ADMIN'">Agregar productos</button>
         </div>
 
         <div class="gridProducts">
@@ -29,32 +23,22 @@
                 <div class="card-body">
                     <h5 class="card-title">{{item.name}}</h5>
                     <p class="card-text">{{item.description}}</p>
-                    <p class="card-text" class="card-price">
+                    <p class="card-text card-price">
                         {{ item.price | slice:0:2 }},{{ item.price | slice:2:4 }}$
                     </p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary btn-sm mx-auto d-block" (click)="addToCar(item)">
+                        <i class='bx bx-plus'></i>
+                        Agregar al carrito
+                    </button>
                 </div>
             </div>
         </div>
 
-        <app-empty *ngIf="!loading && products.length < 1" 
-            icon="bx bx-sad"
+        <app-empty *ngIf="!loading && products.length < 1" icon="bx bx-sad"
             text="Aún no hay<br> productos creados"></app-empty>
 
         <app-loading *ngIf="loading"></app-loading>
-        <!--  <div class="card">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="assets/images/test-image.jpg" alt="..." class="card-img">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">El atico</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="">Last updated 3 mins ago</small>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
 </div>

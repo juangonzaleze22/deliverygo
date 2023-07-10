@@ -1,0 +1,14 @@
+<div class="cardProduct">
+    <img class="cardProduct__img" [src]="item.photoURL" alt="">
+    <div class="card-body cardProduct__body">
+        <h5 class="card-title cardProduct__title">{{item.name}}</h5>
+        <small> {{ item.price | slice:0:2 }},{{ item.price | slice:2:4 }}$</small>
+       <!--  <p *ngIf="item.addressBusiness"> {{ item.addressBusiness }}</p> -->
+        <!-- <p class="card-text cardProduct__description">
+            <small class="text-body-secondary">Last updated 3 mins ago</small>
+        </p> -->
+    </div>
+    <button type="button" class="btn cardProduct__btnRemove" (click)="removeProduct(item)">
+        <i class="bx bx-x"></i>
+    </button>
+</div>

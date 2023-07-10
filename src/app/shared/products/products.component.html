@@ -1,0 +1,21 @@
+<div class="products" *ngIf="(products | async)?.length > 0">
+    <div class="products__list" *ngIf="showList">
+        <div class="products__scroll">
+            <app-card-product
+             *ngFor="let item of products | async"
+             [item]="item"
+            ></app-card-product>
+        </div>
+        <div class="card-footer pt-3">
+            <button class="btn btn-primary d-block w-100" (click)="addDeliveryWithProduct()">
+                Realizar pedido
+            </button>
+        </div>
+    </div>
+    <div class="btn btn-primary products__button" (click)="showList = !showList">
+        <i class='products__icon bx bx-cart-alt'></i>
+        <div class="products__notify">
+            {{(products | async)?.length}}
+        </div>
+    </div>
+</div>

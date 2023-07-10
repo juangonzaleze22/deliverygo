@@ -56,7 +56,7 @@ export class DialogAddDeliveryComponent implements OnInit {
     this.map.on('click', (e) => {
       const { lng, lat } = e.lngLat;
       const center = this.map.getCenter();
-      const distance = this.calculateDistance(center.lng, center.lat, lng, lat);
+      const distance = this.globalService.calculateDistance(center.lng, center.lat, lng, lat);
 
       if (distance >= 10) {
         this.toastService.showError("Lo siento, la dirección que selecciono pasa los 10km", "Error");
@@ -149,12 +149,7 @@ export class DialogAddDeliveryComponent implements OnInit {
     }
   }
 
-  move(event: google.maps.MapMouseEvent) {
-    /* if (event.latLng != null) this.display = event.latLng.toJSON(); */
-  }
-
-  onSubmit() {/* 
-    this.loading = true; */
+  onSubmit() {
 
     const { _id } = this.authService.getUser();
 
@@ -166,8 +161,6 @@ export class DialogAddDeliveryComponent implements OnInit {
       idUser: _id,
       distance: this.distance
     }
-
-    console.log("onsubmit", request)
 
     this.globalService.postService('delivery', request).pipe(
       finalize(() => {
@@ -193,55 +186,11 @@ export class DialogAddDeliveryComponent implements OnInit {
     })
 
   }
-  /*  setAddres(start, end) { 
- 
-     console.log("sta", start, end);
- 
-     const addressStart = start.features[0].place_name;
-     const addressEnd = end.features[0].place_name;
-     const result = addressEnd;
-   
-     if (this.address.length === 0) {
-       this.address.push(addressStart);
-     }
-   
-     this.address.push(result);
-     console.log("address: ", this.address);
-     
-   } */
 
-  calculateDistance(lng1, lat1, lng2, lat2) {
-    const R = 6371; // Earth's radius in kilometers
-    const dLat = this.toRadians(lat2 - lat1);
-    const dLon = this.toRadians(lng2 - lng1);
-
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(this.toRadians(lat1)) * Math.cos(this.toRadians(lat2)) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = R * c;
-
-    return distance;
-  }
-
-  toRadians(degrees) {
-    return degrees * (Math.PI / 180);
-  }
 
 
   closeModal() {
     this.dialogRef.close();
   }
-
-  /* clearMap() {
-   this.coordinates = []
-   this.distance = '0';
-   new mapboxgl.Marker().remove();
-   this.map.removeMarkers();
-  this.map.removeLayers();
-  } */
-
 
 }

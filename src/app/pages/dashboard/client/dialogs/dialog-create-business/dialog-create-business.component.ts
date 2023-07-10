@@ -10,6 +10,8 @@ import { ToastService } from 'src/app/services/toast.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
+import { MapService } from 'src/app/shared/services/map.service';
+import * as mapboxgl from 'mapbox-gl';
 
 @Component({
   selector: 'app-dialog-create-business',
@@ -25,6 +27,9 @@ export class DialogCreateBusinessComponent implements OnInit {
   loading: boolean = false;
   imageUrl: any;
   pattern: string = '^(?=.*[A-Z])(?=.*[a-z]).{8,12}$';
+  map: mapboxgl.Map;
+  marker: mapboxgl.Marker;
+
 
   passwordVisible: boolean = false;
   cpasswordVisible: boolean = false;
@@ -37,7 +42,8 @@ export class DialogCreateBusinessComponent implements OnInit {
     private toastService: ToastService,
     public dialogRef: MatDialogRef<string>,
     private authService: AuthService,
-    @Inject(MAT_DIALOG_DATA) public data
+    @Inject(MAT_DIALOG_DATA) public data,
+    private mapService: MapService
 
   ) {
 
@@ -45,6 +51,7 @@ export class DialogCreateBusinessComponent implements OnInit {
 
   async ngOnInit() {
     this.isUpdate = this.data ? true : false;
+    this.initializeMap()
     this.initForm();
     if (this.isUpdate) {
       const dataBusiness = await this.getInfoBusiness(this.data);
@@ -52,7 +59,7 @@ export class DialogCreateBusinessComponent implements OnInit {
       this.formBusiness.patchValue(dataBusiness);
       this.formBusiness.removeControl('password');
       this.formBusiness.removeControl('cpassword');
-      this.imageUrl = dataBusiness.photo;
+      this.imageUrl = dataBusiness?.photo ? dataBusiness?.photo : ''
     }
   }
 
@@ -68,10 +75,8 @@ export class DialogCreateBusinessComponent implements OnInit {
       ]),
       phone: new FormControl('', [
         Validators.required,
-
       ]),
       addressBusiness: new FormControl('', [
-        Validators.required,
       ]),
       email: new FormControl('', [
         Validators.required,
@@ -88,6 +93,9 @@ export class DialogCreateBusinessComponent implements OnInit {
         Validators.minLength(8),
         Validators.maxLength(12),
         Validators.pattern(this.pattern),
+      ]),
+      addressCoordinates: new FormControl('', [
+        Validators.required,
       ]),
     })
 
@@ -150,6 +158,9 @@ export class DialogCreateBusinessComponent implements OnInit {
           message:
             'La contraseña ingresada no cumple con los requerimientos mínimos. La contraseña debe tener entre 8 y 12 caracteres, al menos 1 letra mayúscula, 1 letra minúscula,  1 número ',
         },
+      ],
+      addressCoordinates: [
+        { type: 'required', message: 'Este campo es requerido' },
       ],
     }
   }
@@ -245,6 +256,8 @@ export class DialogCreateBusinessComponent implements OnInit {
       const result = await this.globalService.getService(`users/getBusinesById/${idBusiness}`).toPromise();
       const { status, data }: any = result;
       if (status == 'success') {
+        return data
+        console.log("data", data);
         /* this.toastService.showSuccess(`El negocio se ha eliminado correctamente`, "Success"); */
       } else {
         throw new Error('An error occurred while fetching the data');
@@ -255,8 +268,6 @@ export class DialogCreateBusinessComponent implements OnInit {
     }
   }
 
-
-
   closeModal() {
     this.dialogRef.close();
   }
@@ -264,6 +275,26 @@ export class DialogCreateBusinessComponent implements OnInit {
   showURL(url: string) {
     const urlPath = url.startsWith("/uploads") ? environment.API_URL_IMAGE + url : url;
     return urlPath
+  }
+
+  initializeMap() {
+    this.map = this.mapService.initializeMap()
+
+    this.map.on('click', (event) => {
+      const { lng, lat } = event.lngLat
+
+      if (this.marker) {
+        this.marker.remove();
+      }
+
+      const selectedPoint = [lng, lat];
+      this.formBusiness.patchValue({ addressCoordinates: selectedPoint });
+      this.marker = new mapboxgl.Marker()
+        .setLngLat([lng, lat])
+        .addTo(this.map);
+
+    });
+
   }
 
 

@@ -13,6 +13,9 @@ import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.componen
 import { LoadingComponent } from './loading/loading.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { EmptyComponent } from './empty/empty.component';
+import { ProductsComponent } from './products/products.component';
+import { CardProductComponent } from './card-product/card-product.component';
+import { AddressMapComponent } from './address-map/address-map.component';
 
 
 @NgModule({
@@ -25,7 +28,10 @@ import { EmptyComponent } from './empty/empty.component';
         NgbModule,
         DialogConfirmComponent,
         LoadingComponent,
-        EmptyComponent
+        EmptyComponent,
+        ProductsComponent,
+        CardProductComponent,
+        AddressMapComponent
     ],
     imports: [
         RouterModule,
@@ -41,7 +47,10 @@ import { EmptyComponent } from './empty/empty.component';
         ColorSwitcherComponent,
         DialogConfirmComponent,
         LoadingComponent,
-        EmptyComponent
+        EmptyComponent,
+        ProductsComponent,
+        CardProductComponent,
+        AddressMapComponent
     ],
     providers: [ ],
 })

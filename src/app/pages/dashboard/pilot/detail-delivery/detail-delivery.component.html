@@ -25,6 +25,8 @@
             </div>
         </div>
 
+    
+
         <div *ngIf="dataUser?.status == 'BUSY'" class="card radius-10 " [ngClass]="{
             'card-busy': dataUser?.status == 'BUSY'
         }">
@@ -42,6 +44,16 @@
                             'bx-car': dataUser?.status == 'BUSY'
                         }"></i>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div *ngIf="dataUser?.status != 'BUSY'" class="card radius-10 " >
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <i class='bx bx-car'></i>
+                    <h4 class="my-1 text-white mb-0">Solicitar un delivery</h4>
                 </div>
             </div>
         </div>
@@ -108,11 +120,12 @@
         </div>
 
         <div class="card cardDetail" *ngIf="!deliveryInfo">
-            <div class="row">
-                <div class="col-6">
-                    empty
-                </div>
-            </div>
+            <div class="card-body">
+				<app-empty
+					icon="bx bx-trip"
+					text="Aún no tiene un<br> delivery asignado."
+				></app-empty>
+			</div>
         </div>
     </div>
 </div>

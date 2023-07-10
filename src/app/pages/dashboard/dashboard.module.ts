@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -30,6 +31,7 @@ import { DetailBusinesComponent } from './client/detail-busines/detail-busines.c
 import { DialogCreateProductComponent } from './client/dialogs/dialog-create-product/dialog-create-product.component';
 import { DialogCreatePilotComponent } from './pilot/dialogs/dialog-create-pilot/dialog-create-pilot.component';
 import { DetailDeliveryComponent } from './pilot/detail-delivery/detail-delivery.component';
+import { DialogCreateDeliveryProductComponent } from './client/dialogs/dialog-create-delivery-product/dialog-create-delivery-product.component';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -50,10 +52,12 @@ const maskConfig: Partial<IConfig> = {
      DialogCreateProductComponent,
      DialogCreatePilotComponent,
      DetailDeliveryComponent,
+     DialogCreateDeliveryProductComponent,
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
+    FormsModule,
     PerfectScrollbarModule,
     ChartsModule,
     NgbModule,

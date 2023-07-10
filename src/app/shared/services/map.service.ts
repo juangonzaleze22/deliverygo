@@ -16,12 +16,12 @@ export class MapService {
     private http: HttpClient
   ) { }
 
-  initializeMap() {
+  initializeMap(center: any = null) {
     (mapboxgl.accessToken as any) = environment.API_KEY_MAP;
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-69.74206, 9.04183],
+      center: center || [-69.74206, 9.04183],
       zoom: 16,
     });
 
@@ -37,28 +37,5 @@ export class MapService {
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json?access_token=${environment.API_KEY_MAP}`;
     return this.http.get(url);
   }
-
-
-  clearMap() {
-
-    // Remove all layers
-    const mapLayers = this.map.getStyle().layers;
-    mapLayers.forEach((layer) => {
-      if (layer.type !== 'background') {
-        this.map.removeLayer(layer.id);
-      }
-    });
-
-    // Remove all sources
-    const mapSources = this.map.getStyle().sources;
-    Object.keys(mapSources).forEach((source) => {
-      this.map.removeSource(source);
-    });
-
-    // Reset the map center and zoom
-    this.map.setCenter([-69.74206, 9.04183]);
-    this.map.setZoom(16);
-  }
-
 
 }

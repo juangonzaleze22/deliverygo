@@ -12,6 +12,9 @@ import { AuthService } from 'src/app/services/auth.service';
 export class HistoryComponent implements OnInit {
 
   deliveries: any;
+  filteredDeliveries: any[] = [];
+  searchKeyword: string = '';
+
   loading: boolean = false;
 
   constructor(
@@ -38,7 +41,8 @@ export class HistoryComponent implements OnInit {
         const { status, data } = result;
         if (status == 'success') {
           console.log("data", data)
-          this.deliveries = data;
+          this.deliveries = data.filter(item => item.status == 'COMPLETE' || item.status === 'CANCEL');
+          this.filteredDeliveries = [...this.deliveries];
         }
       },
       error: (error) => {
@@ -48,6 +52,15 @@ export class HistoryComponent implements OnInit {
 
       }
     })
+  }
+
+  searchDeliveries() {
+    console.log("searchDeliveries", this.searchKeyword)
+    if (this.searchKeyword) {
+      this.filteredDeliveries = this.deliveries.filter(item => item.title.toLowerCase().includes(this.searchKeyword.toLowerCase()) && (item.status === 'COMPLETE' || item.status === 'CANCEL'));
+    } else {
+      this.filteredDeliveries = this.deliveries.filter(item => item.status === 'COMPLETE' || item.status === 'CANCEL');
+    }
   }
 
   showDelivery(delivery){ 

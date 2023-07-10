@@ -18,8 +18,11 @@
 				<button class="btn btn-light" (click)="goToProducts(item._id)">
 					Ver Productos
 				</button>
+				<!-- <button class="btn btn-light" (click)="addToProduct(item)" *ngIf="dataUser.rol == 'CLIENT'">
+					Añadir producto
+				</button> -->
 			</div>
-			<div class="backcard">
+			<div class="backcard" *ngIf="dataUser.rol == 'ADMIN'">
 				<button type="button" class="btn btn-warning" (click)="openDialogAddBusiness(item._id)">
 					<i class='bx bx-pencil'></i>
 				</button>

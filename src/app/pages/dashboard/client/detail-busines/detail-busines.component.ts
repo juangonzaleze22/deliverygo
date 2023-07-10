@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogCreateProductComponent } from '../dialogs/dialog-create-product/dialog-create-product.component';
 import { finalize, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
   selector: 'app-detail-busines',
@@ -19,15 +20,19 @@ export class DetailBusinesComponent implements OnInit {
   business;
   products;
 
+  dataUser: any;
+
 
   constructor(
     public globalService: GlobalService,
     private activateRoute: ActivatedRoute,
     private dialog: MatDialog,
     private authService: AuthService,
+    private productsService: ProductsService
   ) { }
 
   ngOnInit(): void {
+    this.dataUser = JSON.parse(localStorage.getItem('user')!);
 
     this.getBusinessById()
   }
@@ -73,8 +78,6 @@ export class DetailBusinesComponent implements OnInit {
 
     const { _id: idBusiness } = this.business;
 
-    console.log(idBusiness)
-
     this.dialog.open(DialogCreateProductComponent, {
       data: {
         idBusiness: idBusiness
@@ -88,5 +91,12 @@ export class DetailBusinesComponent implements OnInit {
       });
   }
 
+  addToCar(product: any) {
+    const { addressCoordinates } = this.business;
+    
+    product.addressCoordinates = addressCoordinates
+
+    this.productsService.addProduct(product);
+  }
 
 }

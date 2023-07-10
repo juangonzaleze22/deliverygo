@@ -1,0 +1,96 @@
+<div class="card m-0">
+    <div class="card-body">
+        <div class="border p-3 rounded">
+            <h6 class="mb-0 text-uppercase">Crear delivery</h6>
+            <hr />
+            <form class="g-3" [formGroup]="formDeliveryProducts" (ngSubmit)="onSubmit()">
+                <div class="row px-4">
+                    <div class="left col-6">
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Título</label>
+                            <input formControlName="title" type="text" class="form-control">
+                            <ng-container *ngFor="let validation of deliveryTextValidation.title">
+                                <div class="error-text" *ngIf="
+                                        formDeliveryProducts.get('title')?.hasError(validation.type) &&
+                                        (formDeliveryProducts.get('title')?.dirty || formDeliveryProducts.get('title')?.touched)
+                                    ">
+                                    <p>{{ validation.message }}</p>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Número de contacto</label>
+                            <input formControlName="phone" type="text" class="form-control" mask="(0000) 000-0000"
+                                placeholder="(0000) 000-0000" max="10">
+                            <ng-container *ngFor="let validation of deliveryTextValidation.phone">
+                                <div class="error-text" *ngIf="
+                                            formDeliveryProducts.get('phone')?.hasError(validation.type) &&
+                                            (formDeliveryProducts.get('phone')?.dirty || formDeliveryProducts.get('phone')?.touched)
+                                        ">
+                                    <p>{{ validation.message }}</p>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Descripción</label>
+                            <textarea formControlName="description" type="text" class="form-control"></textarea>
+                            <ng-container *ngFor="let validation of deliveryTextValidation.description">
+                                <div class="error-text" *ngIf="
+                                        formDeliveryProducts.get('description')?.hasError(validation.type) &&
+                                        (formDeliveryProducts.get('description')?.dirty || formDeliveryProducts.get('description')?.touched)
+                                    ">
+                                    <p>{{ validation.message }}</p>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Dirección de destino</label>
+                            <div class="text_destination">
+                                <i class='bx bx-current-location'></i>
+                                <p class=""> 
+                                    Urb guanaguanare Avenida {{dataUser.addres.avenue}}, calle {{dataUser.addres.street}}, Numero de casa {{dataUser.addres.numberHouse}}  
+                                </p>
+                            </div>
+                            <!-- <input formControlName="address" type="text" class="form-control"> -->
+                            <!-- <ng-container *ngFor="let validation of deliveryTextValidation.description">
+                                <div class="error-text" *ngIf="
+                                        formDeliveryProducts.get('description')?.hasError(validation.type) &&
+                                        (formDeliveryProducts.get('description')?.dirty || formDeliveryProducts.get('description')?.touched)
+                                    ">
+                                    <p>{{ validation.message }}</p>
+                                </div>
+                            </ng-container> -->
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Distancia</label>
+                            <div class="distance">
+                                <i class='bx bx-trip'></i>
+                                {{distance}}km
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right col-6">
+                        <div class="col-12">
+                            <label class="form-label">Lista de productos</label>
+                            <app-card-product *ngFor="let item of productsSelected" [item]="item"></app-card-product>
+                            <div id="map"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-4">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <button type="button" class="btn btn-light" style="margin-right: 10px"
+                            (click)="closeModal()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary"
+                            [disabled]="formDeliveryProducts.invalid || loading">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status"
+                                aria-hidden="true"></span>
+                            Crear Delivery
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

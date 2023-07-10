@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 import { GlobalService } from 'src/app/services/global.service';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
   selector: 'app-business',
@@ -16,18 +17,20 @@ import { Router } from '@angular/router';
 export class BusinessComponent implements OnInit {
 
   loading: boolean = false;
-  business;
+  business: any[] = [];
   dataUser: any;
 
   constructor(
     private dialog: MatDialog,
     private authService: AuthService,
     private globalService: GlobalService,
-    private route: Router
+    private route: Router,
+    private productsService: ProductsService
   ) { }
 
   ngOnInit(): void {
-    this.dataUser = localStorage.getItem('user')!;
+    this.dataUser = JSON.parse(localStorage.getItem('user')!);
+    console.log("asdasd", this.dataUser)
     this.getAllBusiness();
   }
 
@@ -93,6 +96,11 @@ export class BusinessComponent implements OnInit {
       console.log(error);
       throw new Error('An error occurred while fetching the data');
     }
+  }
+
+  addToProduct(product: any){ 
+    console.log("product", product);
+    this.productsService.addProduct(product);
   }
 
 }

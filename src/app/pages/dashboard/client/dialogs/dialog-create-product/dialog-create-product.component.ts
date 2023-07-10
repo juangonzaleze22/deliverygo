@@ -54,7 +54,7 @@ export class DialogCreateProductComponent implements OnInit {
       price: new FormControl('', [
         Validators.required,
       ]),
-      category: new FormControl('', [
+      category: new FormControl(this.LIST_CATEGORIES[0], [
         Validators.required,
       ]),
       photo: new FormControl('', [
@@ -107,7 +107,7 @@ export class DialogCreateProductComponent implements OnInit {
 
   onFileChange(files) {
     const maxSize = 20971520;
-    const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+    const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
     const reader = new FileReader();
 
     if (files.length > 0) {
@@ -122,6 +122,8 @@ export class DialogCreateProductComponent implements OnInit {
         this.imageUrl = null;
         return;
       }
+
+      this.formProduct.controls['photo'].setErrors(null)
       reader.readAsDataURL(file);
 
       reader.onload = (event: any) => {
@@ -136,14 +138,14 @@ export class DialogCreateProductComponent implements OnInit {
   onSubmit() {
     this.loading = true;
 
-    const {idBusiness} = this.data
+    const { idBusiness } = this.data
 
     this.formProduct.value.photo = this.imageUrl;
     this.formProduct.value.idBusiness = idBusiness
 
     console.log(this.formProduct.value)
 
-    this.globalService.postService('products/createProduct',  this.formProduct.value).pipe(
+    this.globalService.postService('products/createProduct', this.formProduct.value).pipe(
       finalize(() => {
         this.loading = false;
       })
