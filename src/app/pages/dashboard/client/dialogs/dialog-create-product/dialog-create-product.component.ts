@@ -40,8 +40,9 @@ export class DialogCreateProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initForm();
     this.LIST_CATEGORIES = this.globalService.LIST_CATEGORIES;
+    this.initForm();
+    console.log("list cater", this.LIST_CATEGORIES[0])
   }
 
   initForm() {

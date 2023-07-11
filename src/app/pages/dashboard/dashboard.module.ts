@@ -32,6 +32,8 @@ import { DialogCreateProductComponent } from './client/dialogs/dialog-create-pro
 import { DialogCreatePilotComponent } from './pilot/dialogs/dialog-create-pilot/dialog-create-pilot.component';
 import { DetailDeliveryComponent } from './pilot/detail-delivery/detail-delivery.component';
 import { DialogCreateDeliveryProductComponent } from './client/dialogs/dialog-create-delivery-product/dialog-create-delivery-product.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { UserProfileComponent } from './client/user-profile/user-profile.component';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -45,6 +47,7 @@ const maskConfig: Partial<IConfig> = {
      HomePilotComponent,
      HistoryComponent,
      BusinessComponent,
+     UserProfileComponent,
      DialogAddDeliveryComponent,
      DialogDetailDeliveryComponent,
      DialogCreateBusinessComponent,

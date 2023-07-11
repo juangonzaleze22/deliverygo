@@ -9,8 +9,10 @@ import { environment } from 'src/environments/environment';
 })
 export class CardProductComponent implements OnInit {
 
-  @Output() newItemEvent = new EventEmitter<string>();
   @Input() item: any;
+  @Input() actions: boolean = true;
+
+  @Output() newItemEvent = new EventEmitter<string>();
 
   constructor(
     private productsService: ProductsService

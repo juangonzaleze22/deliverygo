@@ -40,7 +40,10 @@ export class DetailBusinesComponent implements OnInit {
 
   getBusinessById() {
     this.loading = true;
-    const id = this.activateRoute.snapshot.paramMap.get('id');
+
+    const id = this.activateRoute.snapshot.paramMap.get('id') || this.dataUser._id;
+
+    console.log("first business", id)
     this.globalService.getService(`users/getBusinesById/${id}`, 1).pipe(
       switchMap((result: any) => {
         const { status, data } = result;

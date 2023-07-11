@@ -54,7 +54,8 @@
 										</div>
 										<div class="col-sm-6">
 											<label for="inputFirstName" class="form-label">Teléfono*</label>
-											<input type="text" class="form-control" formControlName="phone" mask="(0000) 000-0000" placeholder="(0000) 000-0000" maxLength="15">
+											<input type="text" class="form-control" formControlName="phone"
+												mask="(0000) 000-0000" placeholder="(0000) 000-0000" maxLength="15">
 											<ng-container *ngFor="let validation of loginValidationMessages.phone">
 												<div class="error-text" *ngIf="
 														formRegister.get('phone')?.hasError(validation.type) &&
@@ -82,8 +83,16 @@
 											<div class="row mt-3">
 												<div class="col-sm-4">
 													<label for="inputFirstName" class="form-label">Carrera*</label>
-													<input type="text" class="form-control" formControlName="avenue">
-													<ng-container *ngFor="let validation of loginValidationMessages.avenue">
+													<!-- <input type="text" class="form-control" formControlName="avenue"> -->
+													<select class="form-select" id="inputSelectCountry"
+														aria-label="Default select example" formControlName="avenue">
+														<option [value]="item"
+															*ngFor="let item of listAvenue; let index = i">
+															{{item}}
+														</option>
+													</select>
+													<ng-container
+														*ngFor="let validation of loginValidationMessages.avenue">
 														<div class="error-text" *ngIf="
 															formRegister.get('avenue')?.hasError(validation.type) &&
 															(formRegister.get('avenue')?.dirty || formRegister.get('avenue')?.touched)
@@ -94,8 +103,16 @@
 												</div>
 												<div class="col-sm-4">
 													<label for="inputFirstName" class="form-label">Calle*</label>
-													<input type="text" class="form-control" formControlName="street">
-													<ng-container *ngFor="let validation of loginValidationMessages.street">
+													<!-- <input type="text" class="form-control" formControlName="street"> -->
+													<select class="form-select" id="inputSelectCountry"
+														aria-label="Default select example" formControlName="street">
+														<option [value]="item"
+															*ngFor="let item of listStreet; let index = i">
+															{{item}}
+														</option>
+													</select>
+													<ng-container
+														*ngFor="let validation of loginValidationMessages.street">
 														<div class="error-text" *ngIf="
 															formRegister.get('street')?.hasError(validation.type) &&
 															(formRegister.get('street')?.dirty || formRegister.get('street')?.touched)
@@ -105,13 +122,36 @@
 													</ng-container>
 												</div>
 												<div class="col-sm-4">
-													<label for="inputFirstName" class="form-label">Número de Casa*</label>
-													<input type="text" class="form-control" formControlName="numberHouse" maxLength="3" placeholder="257">
-													<ng-container *ngFor="let validation of loginValidationMessages.numberHouse">
+													<label for="inputFirstName" class="form-label">Número de
+														Casa*</label>
+														<select class="form-select" id="inputSelectCountry"
+														aria-label="Default select example" formControlName="numberHouse">
+														<option [value]="item"
+															*ngFor="let item of listNumberHouse; let index = i">
+															{{item}}
+														</option>
+													</select>
+													<ng-container
+														*ngFor="let validation of loginValidationMessages.numberHouse">
 														<div class="error-text" *ngIf="
 															formRegister.get('numberHouse')?.hasError(validation.type) &&
 															(formRegister.get('numberHouse')?.dirty || formRegister.get('numberHouse')?.touched)
 														">
+															<p>{{ validation.message }}</p>
+														</div>
+													</ng-container>
+												</div>
+												<div class="col-12 mt-3">
+													<label for="inputFirstName" class="form-label">Seleccione su punto
+														exacto en el mapa*<br> <small>Para una mejor
+															experiencia</small></label>
+													<div id="map"></div>
+													<ng-container
+														*ngFor="let validation of loginValidationMessages.addressCoordinates">
+														<div class="error-text" *ngIf="
+																formRegister.get('addressCoordinates')?.hasError(validation.type) &&
+																(formRegister.get('addressCoordinates')?.dirty || formRegister.get('addressCoordinates')?.touched)
+															">
 															<p>{{ validation.message }}</p>
 														</div>
 													</ng-container>
@@ -122,7 +162,7 @@
 										<div class="col-sm-12">
 											<label for="inputFirstName" class="form-label">Email*</label>
 											<input type="email" class="form-control" formControlName="email">
-									
+
 											<ng-container *ngFor="let validation of loginValidationMessages.email">
 												<div class="error-text" *ngIf="
 														formRegister.get('email')?.hasError(validation.type) &&
@@ -134,9 +174,12 @@
 										</div>
 										<div class="col-sm-12 password">
 											<label for="inputFirstName" class="form-label">Contraseña*</label>
-											<input [type]="!passwordVisible? 'password' : 'text'" class="form-control" formControlName="password">
-											<button class="btn btn-password" type="button" (click)="passwordVisible = !passwordVisible">
-												<i class='bx' [ngClass]="!passwordVisible ? 'bx-show' : 'bx-low-vision'"></i>
+											<input [type]="!passwordVisible? 'password' : 'text'" class="form-control"
+												formControlName="password">
+											<button class="btn btn-password" type="button"
+												(click)="passwordVisible = !passwordVisible">
+												<i class='bx'
+													[ngClass]="!passwordVisible ? 'bx-show' : 'bx-low-vision'"></i>
 											</button>
 											<ng-container *ngFor="let validation of loginValidationMessages.password">
 												<div class="error-text" *ngIf="
@@ -149,9 +192,12 @@
 										</div>
 										<div class="col-sm-12 password">
 											<label for="inputFirstName" class="form-label">Confirmar contraseña*</label>
-											<input [type]="!cpasswordVisible? 'password' : 'text'" class="form-control" formControlName="cpassword">
-											<button class="btn btn-password" type="button" (click)="cpasswordVisible = !cpasswordVisible">
-												<i class='bx' [ngClass]="!cpasswordVisible ? 'bx-show' : 'bx-low-vision'"></i>
+											<input [type]="!cpasswordVisible? 'password' : 'text'" class="form-control"
+												formControlName="cpassword">
+											<button class="btn btn-password" type="button"
+												(click)="cpasswordVisible = !cpasswordVisible">
+												<i class='bx'
+													[ngClass]="!cpasswordVisible ? 'bx-show' : 'bx-low-vision'"></i>
 											</button>
 											<ng-container *ngFor="let validation of loginValidationMessages.cpassword">
 												<div class="error-text" *ngIf="

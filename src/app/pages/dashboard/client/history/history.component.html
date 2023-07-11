@@ -74,7 +74,7 @@
 								<td>{{item.createdAt | date: 'dd-MM-YYYY'}}</td>
 								<td>
 									<div class="d-flex align-items-center gap-3 fs-6">
-										<a (click)="showDelivery(item)" class="text-primary" data-bs-toggle="tooltip"
+										<a (click)="openDetailDelivery(item)" class="text-primary" data-bs-toggle="tooltip"
 											data-bs-placement="bottom" title="" data-bs-original-title="View detail"
 											aria-label="Views">
 											<i class="bi bi-eye-fill"></i>
@@ -92,6 +92,11 @@
 						</tbody>
 					</table>
 				</div>
+				<app-empty
+					*ngIf="filteredDeliveries.length < 1"
+					icon="bx bxs-store"
+					text="No deliveries registrados<br> por el momento"
+				></app-empty>
 				<!-- <nav class="float-end" aria-label="Page navigation">
 					<ul class="pagination">
 						<li class="page-item disabled"><a class="page-link" href="#">Previous</a>

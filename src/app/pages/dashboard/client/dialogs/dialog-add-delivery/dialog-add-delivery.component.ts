@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Observable, forkJoin, of } from 'rxjs';
-import { catchError, map, finalize } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalService } from 'src/app/services/global.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -11,6 +9,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import * as mapboxgl from 'mapbox-gl';
 import { MapService } from 'src/app/shared/services/map.service';
+import * as turf from '@turf/turf';
 
 
 @Component({
@@ -51,74 +50,7 @@ export class DialogAddDeliveryComponent implements OnInit {
   ngOnInit() {
     this.initForm();
 
-    this.map = this.mapService.initializeMap();
-
-    this.map.on('click', (e) => {
-      const { lng, lat } = e.lngLat;
-      const center = this.map.getCenter();
-      const distance = this.globalService.calculateDistance(center.lng, center.lat, lng, lat);
-
-      if (distance >= 10) {
-        this.toastService.showError("Lo siento, la dirección que selecciono pasa los 10km", "Error");
-      } else {
-        const lngLat: any = e.lngLat.toArray();
-        this.coordinates.push(lngLat);
-
-
-        if (this.coordinates.length >= 2) {
-
-          this.mapService.getMultipleRoutes(this.coordinates).subscribe((data) => {
-            this.distance = data.distance;
-            let totalDistance = 0;
-
-            data.routes.forEach((route, index) => {
-              const layerId = `route-${index}-${Math.random()}`;
-              if (this.map.getLayer(layerId)) {
-                this.map.removeLayer(layerId);
-              }
-              this.map.addLayer({
-                id: layerId,
-                type: 'line',
-                source: {
-                  type: 'geojson',
-                  data: {
-                    type: 'Feature',
-                    properties: {},
-                    geometry: route.geometry
-                  }
-                },
-                layout: {
-                  'line-join': 'round',
-                  'line-cap': 'round'
-                },
-                paint: {
-                  'line-color': '#888',
-                  'line-width': 8
-                }
-              });
-
-              // Add start and end markers
-              /* new mapboxgl.Marker().setLngLat(route.geometry.coordinates[0]).addTo(this.map); */
-              new mapboxgl.Marker().setLngLat(route.geometry.coordinates[route.geometry.coordinates.length - 1]).addTo(this.map);
-
-
-              /*  lastRouteEnd = end; */ // actualizar la variable lastRouteEnd con el final del tramo actual
-
-              totalDistance += route.distance;
-            });
-            const kilometers = (totalDistance / 1000).toFixed(3);
-            this.distance = `${kilometers}`;
-          });
-          console.log(this.coordinates)
-        } else {
-          // Add start and end markers
-          new mapboxgl.Marker()
-            .setLngLat(lngLat) // Coordenadas del marcador
-            .addTo(this.map);
-        }
-      }
-
-    });
+    this.initMap()
   }
 
   initForm() {
@@ -185,6 +117,98 @@ export class DialogAddDeliveryComponent implements OnInit {
       }
     })
 
+  }
+
+  initMap(){
+    this.map = this.mapService.initializeMap();
+    this.map.setZoom(12);
+
+    const mapCenter = this.map.getCenter();
+    const center = [mapCenter.lng, mapCenter.lat];
+    const circleRadius = 4; // Radio del círculo en kilómetros
+    const circleGeometry = turf.circle(center, circleRadius, {
+      steps: 64,
+      units: 'kilometers'
+    });
+
+    this.map.on('load', () => {
+
+      this.map.addSource('circle', {
+        type: 'geojson',
+        data: circleGeometry
+      });
+
+      this.map.addLayer({
+        id: 'circle-layer',
+        type: 'fill',
+        source: 'circle',
+        layout: {},
+        paint: {
+          'fill-color': 'red',
+          'fill-opacity': 0.16
+        }
+      });
+
+    })
+
+    this.map.on('click', (e) => {
+      const { lng, lat } = e.lngLat;
+      const distance = this.globalService.calculateDistance(center[0], center[1], lng, lat);
+
+      if (distance >= circleRadius) {
+        this.toastService.showError("Lo siento, la dirección que selecciono pasa los 8km", "Error");
+
+      } else {
+        const lngLat: any = e.lngLat.toArray();
+        this.coordinates.push(lngLat);
+
+        if (this.coordinates.length >= 2) {
+
+          this.mapService.getMultipleRoutes(this.coordinates).subscribe((data) => {
+            this.distance = data.distance;
+            let totalDistance = 0;
+
+            data.routes.forEach((route, index) => {
+              const layerId = `route-${index}-${Math.random()}`;
+              if (this.map.getLayer(layerId)) {
+                this.map.removeLayer(layerId);
+              }
+              this.map.addLayer({
+                id: layerId,
+                type: 'line',
+                source: {
+                  type: 'geojson',
+                  data: {
+                    type: 'Feature',
+                    properties: {},
+                    geometry: route.geometry
+                  }
+                },
+                layout: {
+                  'line-join': 'round',
+                  'line-cap': 'round'
+                },
+                paint: {
+                  'line-color': '#888',
+                  'line-width': 8
+                }
+              });
+
+              new mapboxgl.Marker().setLngLat(route.geometry.coordinates[route.geometry.coordinates.length - 1]).addTo(this.map);
+
+              totalDistance += route.distance;
+            });
+            const kilometers = (totalDistance / 1000).toFixed(3);
+            this.distance = `${kilometers}`;
+          });
+        } else {
+          // Add start and end markers
+          new mapboxgl.Marker()
+            .setLngLat(lngLat) // Coordenadas del marcador
+            .addTo(this.map);
+        }
+      }
+    });
   }
 
 

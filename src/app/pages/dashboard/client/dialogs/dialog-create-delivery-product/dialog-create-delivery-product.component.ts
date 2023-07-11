@@ -60,6 +60,12 @@ export class DialogCreateDeliveryProductComponent implements OnInit {
       const centerMap = this.productsSelected[0]?.addressCoordinates ?? null
       const coordinates = this.productsSelected.map((product) => product.addressCoordinates);
       this.map = this.mapService.initializeMap(centerMap);
+
+
+      console.log("productsSelected", this.productsSelected)
+
+      const { addressCoordinates } = this.dataUser
+      coordinates.push(addressCoordinates)
       this.generateRoute(coordinates)
       this.generateMarkers(coordinates)
     });
@@ -133,21 +139,13 @@ export class DialogCreateDeliveryProductComponent implements OnInit {
   }
 
   initMap(coordinates, centerMap) {
-
-
-
     this.map = this.mapService.initializeMap(centerMap);
-
     this.generateRoute(coordinates)
     this.generateMarkers(coordinates)
-
   }
 
 
   generateRoute(coordinates: any) {
-
-
-
     this.map.on('load', () => {
       if (coordinates.length > 1) {
 
@@ -181,13 +179,6 @@ export class DialogCreateDeliveryProductComponent implements OnInit {
               }
             });
 
-            // Add start and end markers
-            /* new mapboxgl.Marker().setLngLat(route.geometry.coordinates[0]).addTo(this.map); */
-            /* new mapboxgl.Marker().setLngLat(route.geometry.coordinates[route.geometry.coordinates.length - 1]).addTo(this.map); */
-
-
-            /*  lastRouteEnd = end; */ // actualizar la variable lastRouteEnd con el final del tramo actual
-
             totalDistance += route.distance;
           });
           const kilometers = (totalDistance / 1000).toFixed(3);
@@ -203,19 +194,14 @@ export class DialogCreateDeliveryProductComponent implements OnInit {
       const marker = new mapboxgl.Marker()
         .setLngLat(coordinate)
         .addTo(this.map);
-
-
-
-      const popup = new mapboxgl.Popup({ offset: 25 })
+      /* const popup = new mapboxgl.Popup({ offset: 25 })
         .setHTML(`
         <div class="marker">
            <h3 clas>Marker ${index + 1}</h3><p>Additional information</p>
         <div>
-      
-        
         `);
 
-      marker.setPopup(popup);
+      marker.setPopup(popup); */
     });
   }
 

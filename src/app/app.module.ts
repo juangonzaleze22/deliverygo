@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { CommonModule } from '@angular/common';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from "@angular/common/http";
@@ -41,6 +42,7 @@ import { ImagePipe } from './pipes/image.pipe';
     ContentLayoutComponent, */
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     NgbModule,
@@ -51,7 +53,7 @@ import { ImagePipe } from './pipes/image.pipe';
     // AgmCoreModule.forRoot({apiKey: 'AIzaSyDKXKdHQdtqgPVl2HI2RnUa_1bjCxRCQo4'}),
     PerfectScrollbarModule,
     ToastrModule.forRoot({
-      positionClass :'toast-bottom-right'
+      positionClass: 'toast-bottom-top'
     }),
     NgxMaskModule.forRoot(maskConfig),
 

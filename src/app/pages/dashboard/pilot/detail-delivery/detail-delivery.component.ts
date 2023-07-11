@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { MapService } from 'src/app/shared/services/map.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmComponent } from 'src/app/shared/dialog-confirm/dialog-confirm.component';
+import { DialogDetailDeliveryComponent } from '../../client/dialogs/dialog-detail-delivery/dialog-detail-delivery.component';
 
 
 
@@ -54,13 +55,16 @@ export class DetailDeliveryComponent implements OnInit {
         const { status, data } = response;
         if (status == 'success') {
 
-          console.log("data", data)
-
           this.deliveryInfo = data[0]
-          const { coordinates } = this.deliveryInfo;
-          setTimeout(() => {
-            this.deliveryInfo ? this.initMap(coordinates) : null
-          }, 500);
+
+          if (this.deliveryInfo) {
+            const { coordinates } = this.deliveryInfo;
+            const products = this.deliveryInfo.products.map(item => item.addressCoordinates)
+
+            setTimeout(() => {
+              this.deliveryInfo ? this.initMap(coordinates.length == 0 ? products : coordinates) : null
+            }, 500);
+          }
         }
 
       },
@@ -116,54 +120,57 @@ export class DetailDeliveryComponent implements OnInit {
   }
 
   initMap(coordinates: any = []) {
-    this.map = this.mapService.initializeMap();
+
+    const coordinateCenter = coordinates[0]
+
+    this.map = this.mapService.initializeMap(coordinateCenter);
     // Add the route as a GeoJSON source
     this.map.on('load', () => {
-      this.mapService.getMultipleRoutes(coordinates).subscribe((data) => {
-        this.distance = data.distance;
-        let totalDistance = 0;
+      if (coordinates.length > 1) {
+        this.mapService.getMultipleRoutes(coordinates).subscribe((data) => {
+          this.distance = data.distance;
+          let totalDistance = 0;
 
-        data.routes.forEach((route, index) => {
-          const layerId = `route-${index}-${Math.random()}`;
-          if (this.map.getLayer(layerId)) {
-            this.map.removeLayer(layerId);
-          }
-          this.map.addLayer({
-            id: layerId,
-            type: 'line',
-            source: {
-              type: 'geojson',
-              data: {
-                type: 'Feature',
-                properties: {},
-                geometry: route.geometry
-              }
-            },
-            layout: {
-              'line-join': 'round',
-              'line-cap': 'round'
-            },
-            paint: {
-              'line-color': '#888',
-              'line-width': 8
+          data.routes.forEach((route, index) => {
+            const layerId = `route-${index}-${Math.random()}`;
+            if (this.map.getLayer(layerId)) {
+              this.map.removeLayer(layerId);
             }
+            this.map.addLayer({
+              id: layerId,
+              type: 'line',
+              source: {
+                type: 'geojson',
+                data: {
+                  type: 'Feature',
+                  properties: {},
+                  geometry: route.geometry
+                }
+              },
+              layout: {
+                'line-join': 'round',
+                'line-cap': 'round'
+              },
+              paint: {
+                'line-color': '#888',
+                'line-width': 8
+              }
+            });
+
+            // Add start and end markers
+            new mapboxgl.Marker().setLngLat(route.geometry.coordinates[0]).addTo(this.map);
+            new mapboxgl.Marker().setLngLat(route.geometry.coordinates[route.geometry.coordinates.length - 1]).addTo(this.map);
+
+            totalDistance += route.distance;
           });
-
-          // Add start and end markers
-          new mapboxgl.Marker().setLngLat(route.geometry.coordinates[0]).addTo(this.map);
-          new mapboxgl.Marker().setLngLat(route.geometry.coordinates[route.geometry.coordinates.length - 1]).addTo(this.map);
-
-
-          /*  lastRouteEnd = end; */ // actualizar la variable lastRouteEnd con el final del tramo actual
-
-          totalDistance += route.distance;
+          const kilometers = (totalDistance / 1000).toFixed(3);
+          this.distance = `${kilometers}`;
         });
-        const kilometers = (totalDistance / 1000).toFixed(3);
-        this.distance = `${kilometers}`;
-      });
+      } else {
+        new mapboxgl.Marker().setLngLat(coordinates[0]).addTo(this.map);
+      }
     });
   }
-
 
   confirmToSuccess(): void {
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
@@ -191,7 +198,6 @@ export class DetailDeliveryComponent implements OnInit {
     const { _id: idPilot } = this.dataUser;
     const { _id: idDelivery } = this.deliveryInfo;
 
-
     const request = {
       idPilot,
       idDelivery
@@ -216,6 +222,77 @@ export class DetailDeliveryComponent implements OnInit {
       },
       complete: () => { }
     })
+  }
+
+  getNewDelivery() {
+    this.globalService.getService('delivery/getAvailableDelivery', 1).pipe(
+      finalize(() => {
+        /*  this.loadingInfoConfirm = false; */
+      })
+    ).subscribe({
+      next: (response: any) => {
+        const { status, data } = response;
+
+        if (status == 'success') {
+          data.isPilot = true;
+          this.openDetailDelivery(data)
+        }
+      },
+      error: (err) => {
+        const { status } = err.error
+        if (status == 'error') {
+          this.toastService.showError('No hay deliveries disponible, intente mas tarde', '');
+        }
+        console.log(err)
+      },
+      complete: () => { }
+    })
+  }
+
+  acceptNewDelivery(idDelivery) {
+
+    const request = {
+      idDelivery,
+      idUser: this.dataUser._id
+    }
+
+    this.globalService.postService('delivery/assignDeliveryToPilot', request, 1).pipe(
+      finalize(() => {
+        /*  this.loadingInfoConfirm = false; */
+      })
+    ).subscribe({
+      next: (response: any) => {
+        const { status, data } = response;
+        if (status == 'success') {
+          this.toastService.showSuccess('Se le ha asignado un nuevo delivery', '');
+          this.getInfoDelivery(this.dataUser._id);
+        }
+
+      },
+      error: (err) => {
+        console.log(err)
+      },
+      complete: () => { }
+    })
+  }
+
+
+
+  openDetailDelivery(data: any) {
+    this.dialog.open(DialogDetailDeliveryComponent, {
+      data: data,
+      panelClass: 'dialog-add-delivery',
+    }).componentInstance.changeEvent.subscribe((result) => {
+      // Aquí puedes capturar el cambio emitido desde el diálogo
+      if (result == 'next') {
+        this.dialog.closeAll();
+        this.getNewDelivery()
+      }
+      if (result == 'accept') {
+        const { _id: idDelivery } = data;
+        this.acceptNewDelivery(idDelivery);
+      }
+    });
   }
 
 }

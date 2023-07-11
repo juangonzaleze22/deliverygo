@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { GlobalService } from 'src/app/services/global.service';
 import { finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogDetailDeliveryComponent } from '../dialogs/dialog-detail-delivery/dialog-detail-delivery.component';
 
 
 @Component({
@@ -19,7 +21,8 @@ export class HistoryComponent implements OnInit {
 
   constructor(
     public globalService: GlobalService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +43,6 @@ export class HistoryComponent implements OnInit {
       next: (result: any) => {
         const { status, data } = result;
         if (status == 'success') {
-          console.log("data", data)
           this.deliveries = data.filter(item => item.status == 'COMPLETE' || item.status === 'CANCEL');
           this.filteredDeliveries = [...this.deliveries];
         }
@@ -58,9 +60,16 @@ export class HistoryComponent implements OnInit {
     console.log("searchDeliveries", this.searchKeyword)
     if (this.searchKeyword) {
       this.filteredDeliveries = this.deliveries.filter(item => item.title.toLowerCase().includes(this.searchKeyword.toLowerCase()) && (item.status === 'COMPLETE' || item.status === 'CANCEL'));
-    } else {
+    } else {  
       this.filteredDeliveries = this.deliveries.filter(item => item.status === 'COMPLETE' || item.status === 'CANCEL');
     }
+  }
+
+  openDetailDelivery(data: any) {
+    this.dialog.open(DialogDetailDeliveryComponent, {
+      data: data,
+      panelClass: 'dialog-add-delivery',
+    })
   }
 
   showDelivery(delivery){ 

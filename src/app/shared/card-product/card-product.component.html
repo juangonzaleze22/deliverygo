@@ -8,7 +8,7 @@
             <small class="text-body-secondary">Last updated 3 mins ago</small>
         </p> -->
     </div>
-    <button type="button" class="btn cardProduct__btnRemove" (click)="removeProduct(item)">
+    <button type="button" class="btn cardProduct__btnRemove" (click)="removeProduct(item)" *ngIf="actions">
         <i class="bx bx-x"></i>
     </button>
 </div>

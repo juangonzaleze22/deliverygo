@@ -6,48 +6,57 @@
             </div>
             <div class="col-6">
                 <div class="infoUser">
-                    <img [src]="deliveryInfo.pilot ? deliveryInfo.pilot.photoURL : 'https://placehold.it/100x100'" alt="..." class="card-img">
-                    <div class="infoUser__body" >
+                    <img [src]="deliveryInfo?.pilot ? deliveryInfo?.pilot.photoURL : 'https://placehold.it/100x100'"
+                        alt="..." class="card-img">
+                    <div class="infoUser__body">
                         <small>Piloto</small>
-                        <h5>{{ deliveryInfo.pilot ? deliveryInfo.pilot.name : 'Por asignar'}}</h5>
-                        <p *ngIf="deliveryInfo.pilot">{{deliveryInfo.pilot.phone}}</p>
+                        <h5>{{ deliveryInfo?.pilot ? deliveryInfo?.pilot.name : 'Por asignar'}}</h5>
+                        <p *ngIf="deliveryInfo?.pilot">{{deliveryInfo?.pilot.phone}}</p>
                     </div>
                 </div>
                 <hr>
                 <div class="row mt-4">
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="form-group">
                             <h6 class="mb-0">Titulo</h6>
-                            <p>{{deliveryInfo.title}}</p>
+                            <p>{{deliveryInfo?.title}}</p>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="form-group">
                             <h6 class="mb-0">Distance</h6>
-                            <p>{{deliveryInfo.distance}} km</p>
+                            <p>{{deliveryInfo?.distance}} km</p>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="form-group">
                             <h6 class="mb-0">Fecha</h6>
-                            <p>{{deliveryInfo.createdAt | date: 'dd/MM/YYYY'}}</p>
+                            <p>{{deliveryInfo?.createdAt | date: 'dd/MM/YYYY'}}</p>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-group">
                             <h6 class="mb-0">Descripción</h6>
-                            <p>{{deliveryInfo.description}}</p>
+                            <p>{{deliveryInfo?.description}}</p>
                         </div>
                     </div>
                     <hr>
+                    <div class="col-12" *ngIf="deliveryInfo?.products?.length > 0">
+                        <div class="form-group">
+                            <h6 class="mb-0">Productos</h6>
+                            <app-card-product [item]="item" [actions]="false"
+                                *ngFor="let item of deliveryInfo?.products"></app-card-product>
+                        </div>
+                    </div>
                     <div class="col-12">
-                        <div class="buttons">
+                        <div class="buttons" *ngIf="!data.isPilot">
                             <button class="btn btn-light" (click)="closeModal()">Cerrar</button>
-                           <!--  <button class="ms-3 btn btn-primary" (click)="confirmToSuccess()" [disabled]="loadingInfoConfirm">
-                                <span *ngIf="loadingInfoConfirm" class="spinner-border spinner-border-sm" role="status"
-                                    aria-hidden="true"></span>
-                                Realizado
-                            </button> -->
+                        </div>
+
+                        <div class="buttons" *ngIf="data.isPilot">
+                            <button class="btn btn-light" (click)="closeModal()">Cerrar</button>
+                            <button class="btn btn-secondary" (click)="emitChange('next')">Siguiente</button>
+                            <button class="btn btn-primary" (click)="emitChange('accept')">Aceptar</button>
                         </div>
                     </div>
                 </div>

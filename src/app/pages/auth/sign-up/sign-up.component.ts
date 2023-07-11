@@ -5,6 +5,11 @@ import { Observable, Subject, } from 'rxjs';
 import { GlobalService } from "src/app/services/global.service";
 import { finalize } from 'rxjs/operators'
 import { ToastService } from "src/app/services/toast.service";
+import { MapService } from "src/app/shared/services/map.service";
+import * as mapboxgl from 'mapbox-gl';
+import * as turf from '@turf/turf';
+import { Units, Feature, Polygon } from '@turf/helpers';
+import CircleOptions from "@turf/circle"
 
 
 @Component({
@@ -24,13 +29,20 @@ export class SignUpComponent implements OnInit {
   imageUrl: any;
   photoFile;
 
+  listAvenue: number[] = []
+  listStreet: number[] = []
+  listNumberHouse: number[] = []
+
   loading: boolean = false;
+  map: mapboxgl.Map;
+  marker: mapboxgl.Marker;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     public globalService: GlobalService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private mapService: MapService,
   ) { }
 
   // On Signup link click
@@ -39,7 +51,13 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initForm()
+    this.initForm();
+    this.initializeMap();
+
+    this.listAvenue = this.getNumberArray(4)
+    this.listStreet = this.getNumberArray(8)
+    this.listNumberHouse = this.getNumberArray(450)
+    
   }
 
   initForm() {
@@ -63,7 +81,7 @@ export class SignUpComponent implements OnInit {
       birthday: new FormControl('', [
         Validators.required, this.adultValidator
       ]),
-      avenue : new FormControl('', [
+      avenue: new FormControl('', [
         Validators.required
       ]),
       street: new FormControl('', [
@@ -71,11 +89,8 @@ export class SignUpComponent implements OnInit {
       ]),
       numberHouse: new FormControl('', [
         Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(3),
-        Validators.pattern(this.patternNumber)
       ]),
-     /*  rol: new FormControl(this.globalService.ROLES[0], []), */
+      /*  rol: new FormControl(this.globalService.ROLES[0], []), */
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -87,6 +102,9 @@ export class SignUpComponent implements OnInit {
         Validators.minLength(8),
         Validators.maxLength(12),
         Validators.pattern(this.pattern),
+      ]),
+      addressCoordinates: new FormControl('', [
+        Validators.required,
       ]),
     });
 
@@ -106,10 +124,10 @@ export class SignUpComponent implements OnInit {
       ],
       birthday: [
         { type: 'required', message: 'Este campo es requerido' },
-       {
-        type: 'underage',
-        message: 'Debe ser mayor de 18 años.'
-       }
+        {
+          type: 'underage',
+          message: 'Debe ser mayor de 18 años.'
+        }
       ],
       avenue: [
         { type: 'required', message: 'Este campo es requerido' },
@@ -119,13 +137,6 @@ export class SignUpComponent implements OnInit {
       ],
       numberHouse: [
         { type: 'required', message: 'Este campo es requerido' },
-        { type: 'minlength', message: 'Mínimo 1 caracteres' },
-        { type: 'maxlength', message: 'Máximo 3 caracteres' },
-        {
-          type: 'pattern',
-          message:
-            'Debe agregar un numero',
-        },
       ],
       photo: [
         {
@@ -139,9 +150,9 @@ export class SignUpComponent implements OnInit {
         { type: 'required', message: 'Este campo es requerido' },
         { type: 'pattern', message: 'No es un formato válido' }
       ],
-     /*  rol: [
-        { type: 'required', message: 'Este campo es requerido' },
-      ], */
+      /*  rol: [
+         { type: 'required', message: 'Este campo es requerido' },
+       ], */
       password: [
         { type: 'required', message: 'Este campo es requerido' },
         { type: 'minlength', message: 'Mínimo 8 caracteres' },
@@ -162,12 +173,16 @@ export class SignUpComponent implements OnInit {
           message:
             'La contraseña ingresada no cumple con los requerimientos mínimos. La contraseña debe tener entre 8 y 12 caracteres, al menos 1 letra mayúscula, 1 letra minúscula,  1 número ',
         },
+
+      ],
+      addressCoordinates: [
+        { type: 'required', message: 'Este campo es requerido' },
       ],
     };
 
     this.formRegister.valueChanges.subscribe((response: any) => {
 
-      console.log(this.formRegister)
+      console.log(response);
 
       const { password, cpassword } = response;
       if (password != cpassword) {
@@ -196,11 +211,8 @@ export class SignUpComponent implements OnInit {
         return;
       }
       reader.readAsDataURL(file);
-
-      console.log(file)
-
       reader.onload = (event: any) => {
-        const base64 =  event.target.result;
+        const base64 = event.target.result;
         this.imageUrl = base64
         console.log(this.formRegister.value)
       };
@@ -215,19 +227,15 @@ export class SignUpComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    this.formRegister.value.photo =  this.imageUrl;
+    this.formRegister.value.photo = this.imageUrl;
+    this.formRegister.value.rol = 'CLIENT';
 
-    this.formRegister.value.rol ='CLIENT';
-
-    console.log("form", this.formRegister.value)
-    
-    this.globalService.postServiceFile('auth/register',  this.formRegister.value).pipe(
+    this.globalService.postServiceFile('auth/register', this.formRegister.value).pipe(
       finalize(() => {
         this.loading = false;
       })
     ).subscribe({
       next: (result: any) => {
-
         const { status } = result;
 
         if (status == 'EmailExist') {
@@ -247,11 +255,73 @@ export class SignUpComponent implements OnInit {
       },
       complete: () => {
 
-      } 
+      }
     })
 
   }
 
+  initializeMap() {
+    const coordinateTmk = [-69.73812498486977, 9.023139538592488]
+    this.map = this.mapService.initializeMap(coordinateTmk);
+    const circleRadius = 150; // Radius of the circle in meters
+    const circleGeometry = turf.circle(coordinateTmk, circleRadius, {
+      steps: 64,
+      units: 'meters'
+    });
+
+    // Create a marker
+    this.marker = new mapboxgl.Marker({
+      draggable: false
+    });
+
+    this.map.on('load', () => {
+      // Create a circle around the marker
+      this.map.addSource('circle', {
+        type: 'geojson',
+        data: circleGeometry
+      });
+
+      this.map.addLayer({
+        id: 'circle-layer',
+        type: 'fill',
+        source: 'circle',
+        layout: {},
+        paint: {
+          'fill-color': 'red',
+          'fill-opacity': 0.3
+        }
+      });
+    })
+
+
+    this.map.on('click', (event) => {
+      const { lng, lat } = event.lngLat;
+      // Check if clicked point is outside the circle range
+      const point = turf.point([lng, lat]);
+      const isInside = turf.booleanPointInPolygon(point, circleGeometry);
+
+      if (!isInside) {
+        this.toastService.showError("Lo siento, Disponible solo para la Urbanización Guanaguanare", 'Error')
+      } else {
+        if (this.marker) {
+          this.marker.remove();
+        }
+        const selectedPoint = [lng, lat];
+        this.formRegister.patchValue({ addressCoordinates: selectedPoint });
+        this.marker.setLngLat([lng, lat]).addTo(this.map);
+      }
+    });
+  }
+
+  getNumberArray(count: number) {
+    const numbers = [];
+
+    for (let i = 1; i <= count; i++) {
+      numbers.push(i);
+    }
+
+    return numbers;
+  }
 
   adultValidator(control: AbstractControl): ValidationErrors | null {
     const birthdate = new Date(control.value);

@@ -58,8 +58,9 @@ export class AuthService {
     localStorage.setItem('user', JSON.stringify(user));
     this.dataUser = user;
     this.getUser();
-    this.router.navigate(['dashboard'])
-
+    
+    const path = this.rolStatusRoute(this.dataUser.rol)
+    this.router.navigate([`dashboard/${path}`])
   }
 
   updateDataUser(user) {
@@ -119,5 +120,19 @@ export class AuthService {
     reader.readAsDataURL(file);
     console.log(base64)
     return base64;
+  }
+
+  rolStatusRoute(rol: string): string {
+    
+    const {_id} = this.dataUser
+    
+    const routes = {
+      CLIENT: '/home',
+      PILOT: '/detail-delivery',
+      ADMIN: '/business',
+      BUSINESS: `/detail-business/${_id}`,
+    };
+  
+    return routes[rol] || '/home';
   }
 }

@@ -34,6 +34,16 @@ export const ROUTES_CLIENT: RouteInfo[] = [
         isExternalLink: false,
         submenu: []
     },
+    /* {
+        path: 'reports',
+        title: 'Reportes',
+        icon: 'bx bxs-file-pdf', 
+        class: '', 
+        badge: '',
+        badgeClass: '', 
+        isExternalLink: false,
+        submenu: []
+    }, */
     {
         path: 'profile',
         title: 'Profile',
@@ -49,9 +59,29 @@ export const ROUTES_CLIENT: RouteInfo[] = [
 export const ROUTES_PILOT: RouteInfo[] = [
 
     {
-        path: 'detail-delivery',
+        path: 'detail-business',
         title: 'Delivery',
         icon: 'bx bx-trip', 
+        class: '', 
+        badge: '',
+        badgeClass: '', 
+        isExternalLink: false,
+        submenu: []
+    },
+    /* {
+        path: 'reports',
+        title: 'Reportes',
+        icon: 'bx bxs-file-pdf', 
+        class: '', 
+        badge: '',
+        badgeClass: '', 
+        isExternalLink: false,
+        submenu: []
+    }, */
+    {
+        path: 'profile',
+        title: 'Profile',
+        icon: 'bx bx-user', 
         class: '', 
         badge: '',
         badgeClass: '', 
@@ -64,8 +94,8 @@ export const ROUTES_PILOT: RouteInfo[] = [
 export const ROUTES_BUSINESS: RouteInfo[] = [
 
     {
-        path: 'home',
-        title: 'Delivery',
+        path: 'detail-business',
+        title: 'Home',
         icon: 'bx bx-layer', 
         class: '', 
         badge: '',
@@ -73,7 +103,26 @@ export const ROUTES_BUSINESS: RouteInfo[] = [
         isExternalLink: false,
         submenu: []
     },
- 
+    /* {
+        path: 'reports',
+        title: 'Reportes',
+        icon: 'bx bxs-file-pdf', 
+        class: '', 
+        badge: '',
+        badgeClass: '', 
+        isExternalLink: false,
+        submenu: []
+    }, */
+    {
+        path: 'profile',
+        title: 'Profile',
+        icon: 'bx bx-user', 
+        class: '', 
+        badge: '',
+        badgeClass: '', 
+        isExternalLink: false,
+        submenu: []
+    },
 ];
 
 
@@ -93,6 +142,16 @@ export const ROUTES_ADMIN   : RouteInfo[] = [
         path: 'pilots',
         title: 'Pilots',
         icon: 'bx bx-layer', 
+        class: '', 
+        badge: '',
+        badgeClass: '', 
+        isExternalLink: false,
+        submenu: []
+    },
+    {
+        path: 'profile',
+        title: 'Profile',
+        icon: 'bx bx-user', 
         class: '', 
         badge: '',
         badgeClass: '', 
