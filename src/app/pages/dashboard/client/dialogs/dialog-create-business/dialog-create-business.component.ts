@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { MapService } from 'src/app/shared/services/map.service';
 import * as mapboxgl from 'mapbox-gl';
+import * as turf from '@turf/turf';
 
 @Component({
   selector: 'app-dialog-create-business',
@@ -279,23 +280,56 @@ export class DialogCreateBusinessComponent implements OnInit {
 
   initializeMap() {
     this.map = this.mapService.initializeMap()
+    this.map.setZoom(12);
 
-    this.map.on('click', (event) => {
-      const { lng, lat } = event.lngLat
-
-      if (this.marker) {
-        this.marker.remove();
-      }
-
-      const selectedPoint = [lng, lat];
-      this.formBusiness.patchValue({ addressCoordinates: selectedPoint });
-      this.marker = new mapboxgl.Marker()
-        .setLngLat([lng, lat])
-        .addTo(this.map);
-
+    const mapCenter = this.map.getCenter();
+    const center = [mapCenter.lng, mapCenter.lat];
+    const circleRadius = 4; // Radio del círculo en kilómetros
+    const circleGeometry = turf.circle(center, circleRadius, {
+      steps: 64,
+      units: 'kilometers'
     });
 
-  }
+    this.map.on('load', () => {
 
+      this.map.addSource('circle', {
+        type: 'geojson',
+        data: circleGeometry
+      });
+
+      this.map.addLayer({
+        id: 'circle-layer',
+        type: 'fill',
+        source: 'circle',
+        layout: {},
+        paint: {
+          'fill-color': 'red',
+          'fill-opacity': 0.16
+        }
+      });
+
+    })
+
+    this.map.on('click', (e) => {
+      const { lng, lat } = e.lngLat;
+      const distance = this.globalService.calculateDistance(center[0], center[1], lng, lat);
+
+      if (distance >= circleRadius) {
+        this.toastService.showError("Lo siento, la dirección que selecciono pasa los 8km", "Error");
+
+      } else {
+        if (this.marker) {
+          this.marker.remove();
+        }
+  
+        const selectedPoint = [lng, lat];
+        this.formBusiness.patchValue({ addressCoordinates: selectedPoint });
+        this.marker = new mapboxgl.Marker()
+          .setLngLat([lng, lat])
+          .addTo(this.map);
+  
+        }
+      });
+    }
 
 }

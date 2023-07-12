@@ -59,7 +59,7 @@ export const ROUTES_CLIENT: RouteInfo[] = [
 export const ROUTES_PILOT: RouteInfo[] = [
 
     {
-        path: 'detail-business',
+        path: 'detail-delivery',
         title: 'Delivery',
         icon: 'bx bx-trip', 
         class: '', 

@@ -54,8 +54,8 @@ export class DetailDeliveryComponent implements OnInit {
       next: (response: any) => {
         const { status, data } = response;
         if (status == 'success') {
-
           this.deliveryInfo = data[0]
+          console.log(response)
 
           if (this.deliveryInfo) {
             const { coordinates } = this.deliveryInfo;

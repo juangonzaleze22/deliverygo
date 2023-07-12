@@ -43,12 +43,19 @@
                                 </div>
                             </ng-container>
                         </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Distancia</label>
+                            <div class="distance">
+                                <i class='bx bx-trip'></i>
+                                {{distance}}m
+                            </div>
+                        </div>
                     </div>
                     <div class="right col-6">
                         <div class="col-12">
                             <div class="d-flex justify-content-between align-items-center">
                                 <label class="form-label">Seleccione La ruta de su delivery</label>
-                                <span class="badge badge-secondary">{{distance}} km</span>
+                            <!--     <span class="badge badge-secondary">{{distance}} km</span> -->
                             </div>
 
                             <div id="map"></div>

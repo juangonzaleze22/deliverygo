@@ -53,7 +53,7 @@ import { ImagePipe } from './pipes/image.pipe';
     // AgmCoreModule.forRoot({apiKey: 'AIzaSyDKXKdHQdtqgPVl2HI2RnUa_1bjCxRCQo4'}),
     PerfectScrollbarModule,
     ToastrModule.forRoot({
-      positionClass: 'toast-bottom-top'
+      positionClass: 'toast-top-right'
     }),
     NgxMaskModule.forRoot(maskConfig),
 

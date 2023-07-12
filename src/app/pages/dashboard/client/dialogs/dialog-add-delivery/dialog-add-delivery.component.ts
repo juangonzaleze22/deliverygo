@@ -60,7 +60,7 @@ export class DialogAddDeliveryComponent implements OnInit {
       ]),
       phone: new FormControl('', [
         Validators.required,
-        Validators.minLength(10),
+        Validators.minLength(11),
       ]),
       description: new FormControl('', [
         Validators.required,
@@ -73,7 +73,7 @@ export class DialogAddDeliveryComponent implements OnInit {
       ],
       phone: [
         { type: 'required', message: 'Este campo es requerido' },
-        { type: 'minlength', message: 'Mínimo 10 carácteres' },
+        { type: 'minlength', message: 'Mínimo 11 carácteres' },
       ],
       description: [
         { type: 'required', message: 'Este campo es requerido' },

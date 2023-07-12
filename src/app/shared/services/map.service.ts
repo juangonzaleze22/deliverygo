@@ -22,7 +22,7 @@ export class MapService {
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
       center: center || [-69.74206, 9.04183],
-      zoom: 16,
+      zoom: 14,
     });
 
     return this.map;
