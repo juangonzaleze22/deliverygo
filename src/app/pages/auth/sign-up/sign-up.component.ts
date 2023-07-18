@@ -71,6 +71,7 @@ export class SignUpComponent implements OnInit {
       phone: new FormControl('', [
         Validators.required,
         Validators.minLength(11),
+        this.globalService.phoneValidator
       ]),
       photo: new FormControl(null, [
       ]),
@@ -118,6 +119,7 @@ export class SignUpComponent implements OnInit {
       phone: [
         { type: 'required', message: 'Este campo es requerido' },
         { type: 'minlength', message: 'Mínimo 11 caracteres' },
+        { type: 'invalidPrefix', message: 'El prefijo es inválido. (0414, 0424, 0416, 0426, 0412, 0257)'}
       ],
       addres: [
         { type: 'required', message: 'Este campo es requerido' },

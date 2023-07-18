@@ -1116,7 +1116,7 @@ input::placeholder {
 
 .search-control {
 
-	background-color: rgb(0 0 0 / 15%);
+/* 	background-color: rgb(0 0 0 / 15%); */
 
 	border: 1px solid rgb(255 255 255 / 15%);
 
@@ -1126,7 +1126,7 @@ input::placeholder {
 
 .search-control:focus {
 
-	background-color: rgb(0 0 0 / 15%);
+/* 	background-color: rgb(0 0 0 / 15%); */
 
 	border: 1px solid rgb(255 255 255 / 15%);
 
@@ -1139,8 +1139,8 @@ input::placeholder {
 	font-size: 18px;
 
 	right: 15px;
-
-	color: #ffffff;
+/* 
+	color: #ffffff; */
 
 }
 
@@ -1362,16 +1362,15 @@ input::placeholder {
 
 
 .form-control  {
-    color: #ffffff;
-	background-color: rgb(0 0 0 / 15%);
-    border: 1px solid rgb(255 255 255 / 15%);
+    color: #1d1d1d;
+	background-color: #fff;
+    border: 1px solid #ececec;
 }
 
 
 .form-control:focus {
-    color: #fff;
-	background-color: rgb(0 0 0 / 20%);
-	border-color: 1px solid rgb(255 255 255 / 15%);
+    color: #1d1d1d;
+	border-color: 1px solid #ececec;
 	box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .25)
 }
 
@@ -1381,7 +1380,7 @@ input::placeholder {
 }
 
 
-.form-select {
+/* .form-select {
     color: #ffffff;
 }
 
@@ -1396,7 +1395,7 @@ input::placeholder {
 .form-select {
     background-color: transparent;
 }
-
+ */
 .form-check-input {
     background-color: rgb(255 255 255 / 15%);
     border: 1px solid rgb(255 255 255 / 15%);
@@ -1413,9 +1412,9 @@ input::placeholder {
 }
 
 .input-group-text {
-    color: #ffffff;
+    color: #1d1d1d;/* 
     background-color: rgb(0 0 0 / 20%);
-	border: 1px solid rgb(255 255 255 / 20%);
+	border: 1px solid rgb(255 255 255 / 20%); */
 }
 
 
@@ -1429,18 +1428,18 @@ input::placeholder {
 }
 
 .accordion-button {
-    color: #ffffff;
+    color: #1d1d1d;
     border: 1px solid rgba(255, 255, 255, .125);
     background-color: rgb(255 255 255 / 12%);
 }
 
 .accordion-button:not(.collapsed) {
-	color: #ffffff;
+	color: #1d1d1d;
 	background-color: rgb(255 255 255 / 15%);
 }
 
 .accordion-button:focus {
-    border-color: #fff;
+    border-color: #1d1d1d;
 	box-shadow: 0 0 0 .25rem rgba(225, 225, 225, .25)
 }
 
@@ -1449,7 +1448,7 @@ input::placeholder {
 
 
 .page-link {
-    color: #ffffff;
+    color: #1d1d1d;
     background-color: rgb(255 255 255 / 15%);
 	border: 1px solid rgb(255 255 255 / 15%);
 }
@@ -1473,7 +1472,7 @@ input::placeholder {
 }
 
 .page-item.disabled .page-link {
-    color: #ffffff;
+    color: #1d1d1d;
 	background-color: rgb(255 255 255 / 42%);
 	border-color: rgb(255 255 255 / 15%);
 }
@@ -1494,7 +1493,7 @@ input::placeholder {
 }
 
 .progress-bar {
-    color: #fff;
+    color: #1d1d1d;
     background-color: #ffffff;
 }
 

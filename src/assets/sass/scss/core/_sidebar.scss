@@ -6,7 +6,7 @@
   left: 0;
   width: 250px;
   height: 100%;
-  background: rgb(0 0 0 / 20%);
+  /* background: rgb(0 0 0 / 20%); */
   border-right: 1px solid rgb(255 255 255 / 15%);
   transition: all .2s;
   z-index: 16;
@@ -16,7 +16,7 @@
 
 .sidebar-wrapper .sidebar-header {
     width: 250px;
-    height: 60px;
+    height: 160px;
     display: flex;
     align-items: center;
     position: fixed;
@@ -33,7 +33,9 @@
 }
 
 .logo-icon {
-	width: 30px
+  width: 100%;
+  max-width: 130px;
+  margin: auto;
 }
 
 
@@ -42,13 +44,13 @@
 	margin-left: 10px;
 	margin-bottom: 0;
 	letter-spacing: 1px;
-	color: #ffffff
+	color: #1d1d1d
 
 }
 .toggle-icon {
 	font-size: 22px;
 	cursor: pointer;
-	color: #ffffff
+	color: #1d1d1d
 
 }
 
@@ -60,8 +62,8 @@
 
   .sidebar-content {
     position: relative;
-    top: 60px;
-    height: calc(100% - 60px);
+    top: 160px;
+    height: calc(100% - 160px);
     overflow: auto;
     z-index: 4;
   }
@@ -129,13 +131,13 @@
         justify-content: left;
         padding: 9px 15px;
         font-size: 15px;
-        color: rgb(255 255 255 / 75%);
+        color: #1d1d1d;
         outline-width: 0;
         text-overflow: ellipsis;
         overflow: hidden;
         letter-spacing: 0.5px;
         border: 1px solid #ffffff00;
-
+        border-radius: 10px;
         transition: all .3s ease-out;
 
         &:before {
@@ -159,7 +161,7 @@
 
         text-decoration: none;
       
-        background: rgb(255 255 255 / 15%);
+        background: #9B0E00;
       }
 
       &.active > a {
@@ -167,7 +169,7 @@
 
         text-decoration: none;
       
-        background: rgb(255 255 255 / 15%);
+        background: #9B0E00;
 
         &:before {
           left: 0;
@@ -191,7 +193,7 @@
 
             text-decoration: none;
           
-            background: rgb(255 255 255 / 15%);
+            background: #9B0E00;
           }
         }
       }
@@ -251,7 +253,7 @@
 	}
     .wrapper.nav-collapsed.sidebar-hovered .sidebar-wrapper {
 		box-shadow: 0 .3rem .8rem rgba(0, 0, 0, .12)!important;
-    background-color: #171717;
+    background-color: #fff;
 		
 	}
 	.wrapper.nav-collapsed:not(.sidebar-hovered) .sidebar-wrapper .sidebar-header {

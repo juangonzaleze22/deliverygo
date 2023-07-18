@@ -10,7 +10,7 @@
                     </label>
                     <div class="boxImage">
                         <label class="imageUpload" for="photoFile">
-                            <img [src]="imageUrl ? imageUrl : 'https://placehold.it/1080x1080'"
+                            <img [src]="imageUrl ? showURL(imageUrl) : 'https://placehold.it/1080x1080'"
                                 alt="Preview Image">
                             <input id="photoFile" type="file" accept="image/*"
                                 (change)="onFileChange($event.target.files)">
@@ -50,7 +50,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text" id="basic-addon1">$</span>
                         </div>
-                        <input formControlName="price" type="text" class="form-control" mask="00.00">
+                        <input formControlName="price" type="text" class="form-control"  mask="separator.2" decimalMarker="," [allowNegativeNumbers]="false">
                     </div>
                     <ng-container *ngFor="let validation of productTextValidation.price" placeholder="00.00">
                         <div
@@ -67,7 +67,7 @@
                 <div class="col-6">
                     <label class="form-label">Categoria*</label>
                     <select class="form-select"  formControlName="category">
-                        <option *ngFor="let item of LIST_CATEGORIES" value="item">{{item}}</option>
+                        <option *ngFor="let item of LIST_CATEGORIES" [value]="item">{{item}}</option>
                     </select>
                     <ng-container *ngFor="let validation of productTextValidation.price" placeholder="00.00">
                         <div

@@ -36,6 +36,7 @@ export class DialogCreateBusinessComponent implements OnInit {
   cpasswordVisible: boolean = false;
 
   isUpdate: boolean = false;
+  updateProfileBusiness: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,16 +52,33 @@ export class DialogCreateBusinessComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.isUpdate = this.data ? true : false;
-    this.initializeMap()
+    this.isUpdate = this.data.idBusiness ? true : false;
+    this.updateProfileBusiness = this.data.idClient ? true : false;
+    console.log("this.data", this.data)
     this.initForm();
     if (this.isUpdate) {
-      const dataBusiness = await this.getInfoBusiness(this.data);
-      console.log(dataBusiness)
-      this.formBusiness.patchValue(dataBusiness);
+      const response = await this.getInfoBusiness(this.data.idBusiness);
+      const { business, email, phone } = response;
+      this.formBusiness.patchValue({
+        name: business.name,
+        phone: phone,
+        email: email,
+        description: business.description,
+        addressCoordinates: business.addressCoordinates,
+        photo: business.photo ? business.photo : ''
+      });
       this.formBusiness.removeControl('password');
       this.formBusiness.removeControl('cpassword');
-      this.imageUrl = dataBusiness?.photo ? dataBusiness?.photo : ''
+      this.imageUrl = business?.photo ? business?.photo : ''
+      this.initializeMap(business.addressCoordinates)
+    } else if (this.updateProfileBusiness) {
+      this.formBusiness.removeControl('email');
+      this.formBusiness.removeControl('password');
+      this.formBusiness.removeControl('cpassword');
+      this.initializeMap()
+
+    }else { 
+      this.initializeMap()
     }
   }
 
@@ -76,9 +94,10 @@ export class DialogCreateBusinessComponent implements OnInit {
       ]),
       phone: new FormControl('', [
         Validators.required,
+        Validators.minLength(11),
+        this.globalService.phoneValidator
       ]),
-      addressBusiness: new FormControl('', [
-      ]),
+
       email: new FormControl('', [
         Validators.required,
         Validators.pattern('^([a-zA-Z0-9-+_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$')
@@ -118,7 +137,8 @@ export class DialogCreateBusinessComponent implements OnInit {
       ],
       phone: [
         { type: 'required', message: 'Este campo es requerido' },
-        { type: 'minlength', message: 'Mínimo 8 caracteres' },
+        { type: 'minlength', message: 'Mínimo 11 caracteres' },
+        { type: 'invalidPrefix', message: 'El prefijo es inválido. (0414, 0424, 0416, 0426, 0412, 0257)'}
       ],
       photo: [
         {
@@ -128,9 +148,6 @@ export class DialogCreateBusinessComponent implements OnInit {
           type: 'maxSize', message: 'La imagen es demasiado grande, máximo 8mb'
         },
 
-      ],
-      addressBusiness: [
-        { type: 'required', message: 'Este campo es requerido' },
       ],
       email: [
         { type: 'required', message: 'Este campo es requerido' },
@@ -192,12 +209,10 @@ export class DialogCreateBusinessComponent implements OnInit {
       }
       reader.readAsDataURL(file);
 
-      console.log(file)
 
       reader.onload = (event: any) => {
         const base64 = event.target.result;
         this.imageUrl = base64
-        console.log(this.formBusiness.value)
       };
     }
   }
@@ -208,38 +223,44 @@ export class DialogCreateBusinessComponent implements OnInit {
     this.formBusiness.value.photo = this.imageUrl;
     this.formBusiness.value.rol = 'BUSINESS';
 
-    const url = this.isUpdate ? 'users/updateUser' : 'auth/register';
-    const urlToSubmit = this.globalService.postService(url, this.formBusiness.value);
+    if (this.data.idClient) {
+      this.createdProfileClient()
+      return
+    } else {
+      const url = this.isUpdate ? `auth/updateProfileBusiness/${this.data.idBusiness}` : 'auth/register';
+      const urlToSubmit = this.globalService.postService(url, this.formBusiness.value);
 
-    urlToSubmit.pipe(
-      finalize(() => {
-        this.loading = false;
+      urlToSubmit.pipe(
+        finalize(() => {
+          this.loading = false;
+        })
+      ).subscribe({
+        next: (result: any) => {
+          const { status } = result;
+
+          const msg: string = this.isUpdate ? 'actualizado' : 'creado'
+
+          if (status == 'EmailExist') {
+            this.toastService.showWarning("Este email ya existe", "Warning")
+          }
+
+          if (status == 'success') {
+            this.toastService.showSuccess(`El negocio se ha ${msg} correctamente`, "Success");
+            this.dialogRef.close({
+              reload: true
+            });
+            this.formBusiness.reset();
+          }
+        },
+        error: (error) => {
+          console.log(error)
+        },
+        complete: () => {
+
+        }
       })
-    ).subscribe({
-      next: (result: any) => {
-        const { status } = result;
+    }
 
-        const msg: string = this.isUpdate ? 'actualizado' : 'creado'
-
-        if (status == 'EmailExist') {
-          this.toastService.showWarning("Este email ya existe", "Warning")
-        }
-
-        if (status == 'success') {
-          this.toastService.showSuccess(`El negocio se ha ${msg} correctamente`, "Success");
-          this.dialogRef.close({
-            reload: true
-          });
-          this.formBusiness.reset();
-        }
-      },
-      error: (error) => {
-        console.log(error)
-      },
-      complete: () => {
-
-      }
-    })
 
   }
 
@@ -258,7 +279,6 @@ export class DialogCreateBusinessComponent implements OnInit {
       const { status, data }: any = result;
       if (status == 'success') {
         return data
-        console.log("data", data);
         /* this.toastService.showSuccess(`El negocio se ha eliminado correctamente`, "Success"); */
       } else {
         throw new Error('An error occurred while fetching the data');
@@ -278,9 +298,20 @@ export class DialogCreateBusinessComponent implements OnInit {
     return urlPath
   }
 
-  initializeMap() {
-    this.map = this.mapService.initializeMap()
+  initializeMap(centerMap: any = null) {
+    this.map = this.mapService.initializeMap(centerMap)
     this.map.setZoom(12);
+
+    const addMarker = (lng, lat) => {
+      if (this.marker) {
+        this.marker.remove();
+      }
+      const selectedPoint = [lng, lat];
+      this.formBusiness.patchValue({ addressCoordinates: selectedPoint });
+      this.marker = new mapboxgl.Marker()
+        .setLngLat([lng, lat])
+        .addTo(this.map);
+    };
 
     const mapCenter = this.map.getCenter();
     const center = [mapCenter.lng, mapCenter.lat];
@@ -297,8 +328,13 @@ export class DialogCreateBusinessComponent implements OnInit {
         data: circleGeometry
       });
 
+      const layerId = `route-${Math.random()}`;
+      if (this.map.getLayer(layerId)) {
+        this.map.removeLayer(layerId);
+      }
+
       this.map.addLayer({
-        id: 'circle-layer',
+        id: layerId,
         type: 'fill',
         source: 'circle',
         layout: {},
@@ -307,6 +343,10 @@ export class DialogCreateBusinessComponent implements OnInit {
           'fill-opacity': 0.16
         }
       });
+
+      if (centerMap) {
+        addMarker(centerMap[0], centerMap[1]); // Place the marker initially at centerMap
+      }
 
     })
 
@@ -321,15 +361,54 @@ export class DialogCreateBusinessComponent implements OnInit {
         if (this.marker) {
           this.marker.remove();
         }
-  
+
         const selectedPoint = [lng, lat];
         this.formBusiness.patchValue({ addressCoordinates: selectedPoint });
         this.marker = new mapboxgl.Marker()
           .setLngLat([lng, lat])
           .addTo(this.map);
-  
-        }
-      });
+
+      }
+    });
+  }
+
+  createdProfileClient() {
+    const { name, photo, description, addressCoordinates, rol, phone } = this.formBusiness.value
+
+    const request = {
+      name,
+      photo,
+      description,
+      addressCoordinates,
+      phone
     }
+
+    const urlToSubmit = this.globalService.postService(`auth/updateProfileBusiness/${this.data.idClient}`, request);
+
+    urlToSubmit.pipe(
+      finalize(() => {
+        this.loading = false;
+      })
+    ).subscribe({
+      next: (result: any) => {
+        const { status, data } = result;
+
+        if (status == 'success') {
+          this.toastService.showSuccess(`Su perfil de negocio se habilito correctamente`, "Success");
+          this.authService.updateDataUser(data)
+          this.dialogRef.close({
+            reload: true
+          });
+          this.formBusiness.reset();
+        }
+      },
+      error: (error) => {
+        console.log(error)
+      },
+      complete: () => {
+
+      }
+    })
+  }
 
 }

@@ -1,0 +1,12 @@
+<div class="card card-business" *ngIf="!infoBusiness?.business">
+    <div class="card-body card-edit">
+        <div class="d-flex align-items-center">
+            <img src="assets/images/tienda.png" alt="">
+            <p class="mb-0">Aun no tienes tu perfil como negocio</p>
+            <button class="btn btn-primary" (click)="createProfileBusiness()">Habilitar perfil</button>
+            <!-- <h4 class="my-1">$4805</h4> -->
+            <!-- <p class="mb-0 font-13"><i class='bx bxs-up-arrow align-middle'></i>$34 Since last week</p> -->
+        </div>
+    </div>
+</div>
+<app-detail-busines [businessButton]="true" *ngIf="infoBusiness?.business"></app-detail-busines>

@@ -9,6 +9,7 @@ import { GlobalService } from 'src/app/services/global.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dialog-create-product',
@@ -28,6 +29,8 @@ export class DialogCreateProductComponent implements OnInit {
   passwordVisible: boolean = false;
   cpasswordVisible: boolean = false;
 
+  isUpdate: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     public globalService: GlobalService,
@@ -39,10 +42,16 @@ export class DialogCreateProductComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+ async ngOnInit() {
+    this.isUpdate = this.data.idProduct ? true : false;
     this.LIST_CATEGORIES = this.globalService.LIST_CATEGORIES;
     this.initForm();
-    console.log("list cater", this.LIST_CATEGORIES[0])
+    if (this.isUpdate) {
+      const dataProducts = await this.getInfoProduct(this.data.idProduct);
+      this.formProduct.patchValue(dataProducts);
+      console.log(dataProducts)
+      this.imageUrl = dataProducts?.photo ? dataProducts?.photo : ''
+    }
   }
 
   initForm() {
@@ -171,7 +180,27 @@ export class DialogCreateProductComponent implements OnInit {
 
   }
 
+  async getInfoProduct(idProduct: string): Promise<any> {
+    try {
+      const result = await this.globalService.getService(`products/getProductById/${idProduct}`, 1).toPromise();
+      const { status, data }: any = result;
+      if (status == 'success') {
+        return data
+        console.log("data", data);
+        /* this.toastService.showSuccess(`El negocio se ha eliminado correctamente`, "Success"); */
+      } else {
+        throw new Error('An error occurred while fetching the data');
+      }
+    } catch (error) {
+      console.log(error);
+      throw new Error('An error occurred while fetching the data');
+    }
+  }
 
+  showURL(url: string) {
+    const urlPath = url.startsWith("/uploads") ? environment.API_URL_IMAGE + url : url;
+    return urlPath
+  }
 
   closeModal() {
     this.dialogRef.close();

@@ -42,13 +42,17 @@
 }
 
 
-.btn-light {
+.btn-primary {
 	color: #fff;
-	background-color: rgb(255 255 255 / 15%);
-	border-color: rgb(255 255 255 / 35%);
+	background-color: #9B0E00;
+	border-color: #9B0E00;
 }
-.btn-light:hover {
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:disabled {
 	color: #fff;
-	background-color: rgb(255 255 255 / 20%);
-	border-color: rgb(255 255 255 / 40%);
+	background-color: #9B0E00;
+	border-color: #9B0E00;
+}
+
+.btn-primary:disabled{ 
+
 }

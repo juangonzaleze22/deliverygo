@@ -1,18 +1,19 @@
 <div class="rest">
     <div class="rest__header">
-        <img [src]="business?.photoURL" alt="">
+        <img [src]="business?.business.photoURL" alt="">
     </div>
     <div class="rest__body">
-        <h3>{{business?.name}}</h3>
-        <p>{{business?.description}}</p>
-        <p>{{business?.addressBusiness}}</p>
+        <h3>{{business?.business.name}}</h3>
+        <p>{{business?.business.description}}</p>
+        <p>{{business?.business.addressBusiness}}</p>
         <div class="separator"></div>
     </div>
     <div class="res__products pb-5">
 
         <div class="title-section">
             <h3>Productos</h3>
-            <button class="btn btn-light" (click)="openDialogCreateProduct()"  *ngIf="dataUser.rol == 'ADMIN' || dataUser.rol == 'BUSINESS'" >Agregar productos</button>
+            <button class="btn btn-primary" (click)="openDialogCreateProduct()"
+                *ngIf="dataUser.rol == 'ADMIN' || dataUser.rol == 'BUSINESS' || dataUser.rol == 'SUPERUSER'">Agregar productos</button>
         </div>
 
         <div class="gridProducts">
@@ -24,13 +25,21 @@
                     <h5 class="card-title">{{item.name}}</h5>
                     <p class="card-text">{{item.description}}</p>
                     <p class="card-text card-price">
-                        {{ item.price | slice:0:2 }},{{ item.price | slice:2:4 }}$
+                        {{ item.price | currency}}
                     </p>
                 </div>
-                <div class="card-footer" *ngIf="dataUser.rol == 'CLIENTE'">
+                <div class="card-footer" *ngIf="dataUser.rol == 'CLIENTE' || dataUser.rol == 'SUPERUSER'">
                     <button class="btn btn-primary btn-sm mx-auto d-block" (click)="addToCar(item)">
                         <i class='bx bx-plus'></i>
                         Agregar al carrito
+                    </button>
+                </div>
+                <div class="backcard" *ngIf="dataUser.rol == 'ADMIN'">
+                    <button type="button" class="btn btn-warning" (click)="openDialogCreateProduct(item._id)">
+                        <i class='bx bx-pencil'></i>
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="deleteProduct(item._id)">
+                        <i class='bx bx-x'></i>
                     </button>
                 </div>
             </div>

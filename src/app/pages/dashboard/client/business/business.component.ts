@@ -30,16 +30,16 @@ export class BusinessComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataUser = JSON.parse(localStorage.getItem('user')!);
-    console.log("asdasd", this.dataUser)
     this.getAllBusiness();
   }
 
   openDialogAddBusiness(idBusiness:string = null) {
     this.dialog.open(DialogCreateBusinessComponent,{
-      data: idBusiness
+      data: {
+        idBusiness
+      }
     })
       .afterClosed().subscribe(resp => {
-        console.log(resp)
         if (resp?.reload) {
            this.getAllBusiness();
         }
@@ -47,7 +47,6 @@ export class BusinessComponent implements OnInit {
   }
 
   goToProducts(idBusiness){ 
-    console.log(idBusiness);
 
     this.route.navigate([`/dashboard/detail-business/${idBusiness}`]);
   }
@@ -64,13 +63,14 @@ export class BusinessComponent implements OnInit {
       next: (result: any) => {
         const { status, data } = result;
         if (status == 'success') {
-          console.log("data", data)
           this.business = data.map(busines => { 
             const defaultImage = 'https://placehold.it/100x100';
-            const url = busines.photo ? environment.API_URL_IMAGE + busines.photo : defaultImage
-            busines.photoURL = url;
+            const url = busines.business.photo ? environment.API_URL_IMAGE + busines.business.photo : defaultImage
+            busines.business.photoURL = url;
             return busines
           });
+
+          
         }
       },
       error: (error) => {

@@ -5,6 +5,7 @@ import { HomeComponent as HomeClientComponent } from './client/home/home.compone
 import { HomeComponent as HomePilotComponent} from './pilot/home/home.component';
 import { DetailBusinesComponent } from './client/detail-busines/detail-busines.component';
 import { DetailDeliveryComponent } from './pilot/detail-delivery/detail-delivery.component';
+import { MyBusinessComponent } from './client/my-business/my-business.component';
 
 
 export const ROUTES = [
@@ -29,11 +30,19 @@ export const ROUTES = [
         component: BusinessComponent
     },
     {
+        path: 'my-business',
+        component: MyBusinessComponent
+    },
+    {
         path: 'detail-business/:id',
         component: DetailBusinesComponent
     },
     {
         path: 'detail-business',
+        component: DetailBusinesComponent
+    },
+        {
+        path: 'detail-business/:id',
         component: DetailBusinesComponent
     },
     {

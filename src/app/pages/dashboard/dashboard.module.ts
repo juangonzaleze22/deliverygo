@@ -34,6 +34,7 @@ import { DetailDeliveryComponent } from './pilot/detail-delivery/detail-delivery
 import { DialogCreateDeliveryProductComponent } from './client/dialogs/dialog-create-delivery-product/dialog-create-delivery-product.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { UserProfileComponent } from './client/user-profile/user-profile.component';
+import { MyBusinessComponent } from './client/my-business/my-business.component';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -56,6 +57,7 @@ const maskConfig: Partial<IConfig> = {
      DialogCreatePilotComponent,
      DetailDeliveryComponent,
      DialogCreateDeliveryProductComponent,
+     MyBusinessComponent,
   ],
   imports: [
     CommonModule,

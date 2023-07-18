@@ -151,5 +151,19 @@ export class GlobalService {
     return degrees * (Math.PI / 180);
   }
 
+  phoneValidator(control) {
+    const validPrefixes = ['0414', '0424', '0416', '0426', '0412', '0257'];
+    const phoneNumber = control.value;
+
+    if (phoneNumber && phoneNumber.length >= 4) {
+      const prefix = phoneNumber.substring(0, 4);
+      if (!validPrefixes.includes(prefix)) {
+        return { invalidPrefix: true };
+      }
+    }
+
+    return null;
+  }
+
 
 }

@@ -83,7 +83,7 @@ export class SidebarComponent implements OnInit {
         const {rol} = this.authService.getUser();
 
 
-        if ( rol == 'CLIENT') { 
+        if ( rol == 'CLIENT' || rol == 'SUPERUSER') { 
             this.menuItems = ROUTES_CLIENT.filter(menuItem => menuItem);
         }
 

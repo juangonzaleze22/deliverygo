@@ -45,6 +45,16 @@ export const ROUTES_CLIENT: RouteInfo[] = [
         submenu: []
     }, */
     {
+        path: 'my-business',
+        title: 'My negocio',
+        icon: 'bx bxs-business', 
+        class: '', 
+        badge: '',
+        badgeClass: '', 
+        isExternalLink: false,
+        submenu: []
+    },
+    {
         path: 'profile',
         title: 'Profile',
         icon: 'bx bx-user', 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +15,8 @@ import { ProductsService } from 'src/app/services/products.service';
   styleUrls: ['./detail-busines.component.scss']
 })
 export class DetailBusinesComponent implements OnInit {
+
+  @Input() businessButton: boolean
 
   loading: boolean = false;
   business;
@@ -33,7 +35,7 @@ export class DetailBusinesComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataUser = JSON.parse(localStorage.getItem('user')!);
-
+    console.log("myBusiness", this.businessButton)
     this.getBusinessById()
   }
 
@@ -49,8 +51,8 @@ export class DetailBusinesComponent implements OnInit {
         const { status, data } = result;
         if (status == 'success') {
           const defaultImage = 'https://placehold.it/100x100';
-          const url = data.photo ? environment.API_URL_IMAGE + data.photo : defaultImage;
-          data.photoURL = url;
+          const url = data.business.photo ? environment.API_URL_IMAGE + data.business.photo : defaultImage;
+          data.business.photoURL = url;
           this.business = data;
           console.log("business", this.business);
           return this.globalService.getService(`products/getAllProductsByBusiness/${data._id}`, 1);
@@ -77,13 +79,26 @@ export class DetailBusinesComponent implements OnInit {
     })
   }
 
-  openDialogCreateProduct() {
+  /* openDialogAddBusiness(idBusiness:string = null) {
+    this.dialog.open(DialogCreateBusinessComponent,{
+      data: idBusiness
+    })
+      .afterClosed().subscribe(resp => {
+        console.log(resp)
+        if (resp?.reload) {
+           this.getAllBusiness();
+        }
+      });
+  } */
+
+  openDialogCreateProduct(idProduct:string = null) {
 
     const { _id: idBusiness } = this.business;
 
     this.dialog.open(DialogCreateProductComponent, {
       data: {
-        idBusiness: idBusiness
+        idBusiness,
+        idProduct
       }
     })
       .afterClosed().subscribe(resp => {
@@ -100,6 +115,18 @@ export class DetailBusinesComponent implements OnInit {
     product.addressCoordinates = addressCoordinates
 
     this.productsService.addProduct(product);
+  }
+
+  
+
+  openDialogeditProduct(product){ 
+    console.log(product);
+
+    
+  }
+
+  deleteProduct(product){ 
+    console.log(product);
   }
 
 }

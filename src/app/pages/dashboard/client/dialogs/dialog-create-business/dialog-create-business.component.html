@@ -54,7 +54,7 @@
                         </div>
                     </ng-container>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6" *ngIf="!updateProfileBusiness">
                     <label for="inputFirstName" class="form-label">Email*</label>
                     <input type="email" class="form-control" formControlName="email">
 
@@ -107,7 +107,7 @@
                         </div>
                     </ng-container> -->
                 </div>
-                <div class="col-sm-6 password" *ngIf="!isUpdate">
+                <div class="col-sm-6 password" *ngIf="!isUpdate && !updateProfileBusiness">
                     <label for="inputFirstName" class="form-label">Contraseña*</label>
                     <input [type]="!passwordVisible? 'password' : 'text'" class="form-control"
                         formControlName="password">
@@ -123,7 +123,7 @@
                         </div>
                     </ng-container>
                 </div>
-                <div class="col-sm-6 password" *ngIf="!isUpdate">
+                <div class="col-sm-6 password" *ngIf="!isUpdate && !updateProfileBusiness">
                     <label for="inputFirstName" class="form-label">Confirmar contraseña*</label>
                     <input [type]="!cpasswordVisible? 'password' : 'text'" class="form-control"
                         formControlName="cpassword">

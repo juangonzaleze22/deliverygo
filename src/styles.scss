@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-@import 'mapbox-gl/dist/mapbox-gl.css';
+@import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+@import "mapbox-gl/dist/mapbox-gl.css";
 
 .error-text {
     color: #aa0101;
@@ -12,53 +12,60 @@
     padding: 3px 10px;
     border-radius: 3.4px;
     margin: 5px 0;
-    p{
+    p {
         margin: 0;
         text-shadow: none;
         font-weight: 500;
     }
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
-#map { 
+#map {
     width: 100%;
     height: 260px;
 }
 
-.mat-progress-spinner circle, .mat-spinner circle{
+.mat-progress-spinner circle,
+.mat-spinner circle {
     stroke: #fff;
-    opacity: .6;
+    opacity: 0.6;
 }
-.cdk-global-overlay-wrapper{
+.cdk-global-overlay-wrapper {
     overflow: auto;
 }
-app-footer{ 
+app-footer {
     position: fixed;
     bottom: 35px;
     left: 0;
     right: 0;
 }
 
-.boxImage{ 
+.boxImage {
     display: flex;
     flex-direction: column;
-    .imageUpload{ 
+    .imageUpload {
         max-width: max-content;
         margin: auto;
         position: relative;
-        img{
+        img {
             width: 100%;
             height: 220px;
             object-fit: cover;
             cursor: pointer;
         }
-        input{ 
+        input {
             display: none;
         }
     }
-    button {
+    button:not(.change) {
         position: absolute;
         top: 0px;
         right: 0px;
@@ -71,9 +78,9 @@ app-footer{
         height: 24px;
         width: 25px;
         border-radius: 50%;
-        box-shadow: 1px 3px 7px rgba(0, 0, 0, .16);
+        box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.16);
         color: #fff;
-        i{
+        i {
             margin: 0;
         }
     }
@@ -81,80 +88,81 @@ app-footer{
 
 //toggle button
 .toggle {
-	cursor: pointer;
-	display: inline-block;
+    cursor: pointer;
+    display: inline-block;
 }
 .toggle-switch {
-	display: inline-block;
-	background: #ccc;
-	border-radius: 16px;
-	width: 58px;
-	height: 32px;
-	position: relative;
-	vertical-align: middle;
-	transition: background 0.25s;
-	&:before,
-	&:after {
-		content: "";
-	}
-	&:before {
-		display: block;
-		background: linear-gradient(to bottom, #fff 0%,#eee 100%);
-		border-radius: 50%;
-		box-shadow: 0 0 0 1px rgba(0,0,0,0.25);
-		width: 24px;
-		height: 24px;
-		position: absolute;
-		top: 4px;
-		left: 4px;
-		transition: left 0.25s;
-	}
-	.toggle:hover &:before {
-		background: linear-gradient(to bottom, #fff 0%,#fff 100%);
-		box-shadow: 0 0 0 1px rgba(0,0,0,0.5);
-	}
-	.toggle-checkbox:checked + & {
-		background: #008cff;
-		&:before {
-			left: 30px;
-		}
-	}
+    display: inline-block;
+    background: #ccc;
+    border-radius: 16px;
+    width: 58px;
+    height: 32px;
+    position: relative;
+    vertical-align: middle;
+    transition: background 0.25s;
+    &:before,
+    &:after {
+        content: "";
+    }
+    &:before {
+        display: block;
+        background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+        border-radius: 50%;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        transition: left 0.25s;
+    }
+    .toggle:hover &:before {
+        background: linear-gradient(to bottom, #fff 0%, #fff 100%);
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+    }
+    .toggle-checkbox:checked + & {
+        background: #008cff;
+        &:before {
+            left: 30px;
+        }
+    }
 }
 .toggle-checkbox {
-	position: absolute;
-	visibility: hidden;
+    position: absolute;
+    visibility: hidden;
 }
 .toggle-label {
-	margin-left: 5px;
-	position: relative;
-	top: 2px;
+    margin-left: 5px;
+    position: relative;
+    top: 2px;
 }
 
-.card{
+.card {
     position: relative;
     overflow: hidden;
     &:hover {
         .backcard {
-        transition: .3s ease-in-out;
-        transform: translateY(0px);
+            transition: 0.3s ease-in-out;
+            transform: translateY(0px);
         }
     }
-    
+
     .backcard {
         position: absolute;
         top: 0;
         -webkit-backdrop-filter: blur(8px);
-        backdrop-filter: blur(8px);
         display: flex;
         align-items: center;
         justify-content: end;
-        gap: 1rem;
-        top: 0;
-        right: 0;
-        left: 0;
-        padding: 8px 16px;
-        transform: translateY(-80px);
-        transition: .3s ease-in-out;
+        gap: 5px;
+        top: 10px;
+        right: 10px;
+        padding: -1px 6px;
+        transition: 0.3s ease-in-out;
+        max-width: max-content;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 1px 3px 15px rgba(0, 0, 0, 0.16);
         .btn {
             border-radius: 50%;
             padding: 0;
@@ -164,20 +172,31 @@ app-footer{
             display: flex;
             align-items: center;
             justify-content: center;
+            border: none;
+            background-color: transparent;
             i {
                 margin-right: 0;
+            }
+            &.btn-warning {
+                i {
+                    color: #ffc107;
+                }
+            }
+            &.btn-danger {
+                i {
+                    font-size: 30px;
+                    color: #fd3550;
+                }
             }
         }
     }
 }
 
-.dialog-add-delivery{
+.dialog-add-delivery {
     width: 100%;
-    .mat-dialog-container{
+    .mat-dialog-container {
         max-width: 1000px;
     }
 }
 
-
-
-@import 'themes/main.scss'
+@import "themes/main.scss";

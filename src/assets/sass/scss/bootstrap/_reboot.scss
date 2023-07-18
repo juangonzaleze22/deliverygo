@@ -12,9 +12,8 @@ body {
 }
 
 body {
-
-    color: rgb(255 255 255 / 70%);
-	background-color: #151313;
+	background-color: #f9f9f9;
+    color: #1d1d1d;
  }
 
 a {
@@ -35,9 +34,13 @@ h2,
 h3,
 h4,
 h5,
-h6 {
-	color: rgb(255 255 255);
+h6, p, small, label, thead, tbody, tfoot, tr, td, th, b, a {
+	color:#1d1d1d;
 }
+.input-group-text{
+	border-color: #ececec;
+}
+
 
 .wrapper {
 
@@ -60,7 +63,7 @@ h6 {
 
 	height: 60px;
 
-	background: rgb(0 0 0 / 20%);
+	background: #9B0E00;
 
 	border-bottom: 1px solid rgb(255 255 255 / 15%);
 
